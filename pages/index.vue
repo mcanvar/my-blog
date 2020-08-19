@@ -1,5 +1,5 @@
 <template>
-  <div />
+  <div class="w-12 mx-auto mt-5" />
 </template>
 
 <script>
@@ -7,9 +7,4 @@ export default {}
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
 </style>
