@@ -2,7 +2,7 @@
 	export async function preload({ params }) {
 		// the `slug` parameter is available because
 		// this file is called [slug].svelte
-		const res = await this.fetch(`blog/${params.slug}.json`);
+		const res = await this.fetch(`${params.slug}.json`);
 		const data = await res.json();
 
 		if (res.status === 200) {
@@ -54,6 +54,7 @@
 </style>
 
 <svelte:head>
+	<meta http-equiv="Content-Language" content="tr-TR">
 	<title>{post.title}</title>
 </svelte:head>
 

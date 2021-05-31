@@ -26,6 +26,7 @@
 </style>
 
 <svelte:head>
+    <meta http-equiv="Content-Language" content="tr-TR">
     <title>Sapper project template</title>
 </svelte:head>
 
@@ -34,6 +35,6 @@
 <figure>
     <figcaption>Gel beraber kaşık atalım 2 satır keşküle!</figcaption>
 
-    <a class="twitter-timeline" href="https://twitter.com/mevlutcanvar?ref_src=twsrc%5Etfw">Tweets by mevlutcanvar</a>
+    <a class="twitter-timeline" href="https://twitter.com/mevlutcanvar?ref_src=twsrc%5Etfw">Tivitler</a>
 </figure>
 
