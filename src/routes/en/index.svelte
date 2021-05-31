@@ -26,15 +26,15 @@
 </style>
 
 <svelte:head>
-    <meta http-equiv="Content-Language" content="tr-TR">
-    <title>Sapper project template</title>
+    <meta http-equiv="Content-Language" content="en-US">
+    <title>Mevlut Canvar's Blog</title>
 </svelte:head>
 
 <h1>Selam :)</h1>
 
 <figure>
-    <figcaption>Gel beraber kaşık atalım 2 satır keşküle!</figcaption>
+    <figcaption>Slience is yellow here!</figcaption>
 
-    <a class="twitter-timeline" href="https://twitter.com/mevlutcanvar?ref_src=twsrc%5Etfw">Tivitler</a>
+    <a class="twitter-timeline" href="https://twitter.com/mevlutcanvar?ref_src=twsrc%5Etfw">Tweets by mevlutcanvar</a>
 </figure>
 
