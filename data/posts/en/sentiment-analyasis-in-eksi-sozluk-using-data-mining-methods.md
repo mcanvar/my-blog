@@ -1,6 +1,7 @@
 ---
 title: "Sentiment Analyasis in Ekşi Sözlük Using Data Mining Methods"
 slug: "sentiment-analyasis-in-eksi-sozluk-using-data-mining-methods"
+date: "14-09-2016"
 ---
 
 I finally decided to share my bachelor thesis part by part. Here is the abstract:
