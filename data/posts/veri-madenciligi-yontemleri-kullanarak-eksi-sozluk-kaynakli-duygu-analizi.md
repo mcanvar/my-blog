@@ -1,6 +1,7 @@
 ---
 title: "Veri Madenciliği Yöntemleri Kullanarak Ekşi Sözlük Kaynaklı Duygu Analizi"
 slug: "veri-madenciligi-yontemleri-kullanarak-eksi-sozluk-kaynakli-duygu-analizi"
+date: "14-09-2016"
 ---
 
 Lisans bitirme tezimi adım adım buradan yayınlamak istiyordum uzun süredir ve işte ilk gönderiyi tezimin özeti olarak paylaşıyorum:
