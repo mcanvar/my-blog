@@ -89,7 +89,7 @@ Classes should have this basic prototype:
 
 Create a library file in your application/libraries folder and name it as the name of the jFU library class. Visit this link from github or just copy the below code that blongs to version 9. Be sure that CI base path control  added the top of the  file.
 
-```php
+```
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 /*
  * jQuery File Upload Plugin PHP Class
@@ -1415,7 +1415,7 @@ class UploadHandler
 
 We should create web pages for fancy upload form and files json page. For do that create a controller named upload and a method named json.
 
-```php
+```
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Upload extends CI_Controller {
@@ -1440,7 +1440,7 @@ class Upload extends CI_Controller {
 
 This method will do the business of index.php file in the jFU server folder. As always, we also want to set the options of the library in this method before initializing the library. Create an options array before the load and set the specific options up to you, and pass the array as second parameter.
 
-```php
+```
 	public function json()
 	{
 		$options = [
@@ -1471,7 +1471,7 @@ Load the view of the library from index method.
 
 Create the view file in views/upload/ and named it as index_view.php. Copy its content from the jFU and change change the action of the form element.  Set the address of each source file with the url helper method site_url(). I prefer to locate source files in assets folder named its own library name(assets/jfu/). Copy the css, img and js folders in the folder that you create.
 
-```html
+```
 <?php defined( 'BASEPATH' ) OR exit( 'No direct script access allowed' ); ?>
 <!DOCTYPE HTML>
 <!--
@@ -1736,7 +1736,7 @@ Visit the index method on your browser with the link: http://localhost:8888/uplo
 
 Finally, we should set the url option as communication method absolute path in the file jfu-example\assets\jfu\js\main.js. Open it and change the array’s url index.  I clean up the file and change like this:
 
-```javascript
+```
 /*
  * jQuery File Upload Plugin JS Example
  * https://github.com/blueimp/jQuery-File-Upload
