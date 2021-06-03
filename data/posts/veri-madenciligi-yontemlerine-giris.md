@@ -4,8 +4,6 @@ slug: "veri-madenciligi-yontemlerine-giris"
 date: "14/09/2016"
 ---
 
-Veri Madenciliği Yöntemlerine Giriş
-========================================
 İletişim ihtiyacı tarih boyunca sürmüş ve insanlar her dönemde bu ihtiyacı farklı araçlarla sağlamışlardır. Günümüzde bu ihtiyacımızı büyük ölçüde internet, sosyal medya aracılığıyla karşılamaktadır. Küresel anlamda Facebook, Twitter gibi markalar lider olsa da ülke bazında bu ihtiyacın karşılanması çeşitlilik gösterebilmektedir.
 
 

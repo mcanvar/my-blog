@@ -1,11 +1,9 @@
 ---
 title: "Uygulama Metodları: Eğitim Kümesinin İşaretlenmesi"
-slug: "/uygulama-metodlari-egitim-kumesinin-isaretlenmesi"
+slug: "uygulama-metodlari-egitim-kumesinin-isaretlenmesi"
 date: "02/12/2016"
 ---
 
-Uygulama Metodları: Eğitim Kümesinin İşaretlenmesi
-========================================
 Ön işleme işleminin bitmesiyle elde edilen girdi kümesi artık veri madenciliği süreci içerisinde olduğu için algoritmalar ile gerçekleştirilecek olan makine öğrenmesi için kullanılacaktır. Bu algoritmalar girdilerin insan gözüyle işaretlenmiş halini kullanarak bize sonuçlar üretirler.
 
 Veri tabanındaki kolonların sonuna bir analiz kolonu eklenerek tipi enum seçilir. Alabileceği değer olarak ‘h’ harfi ile mutluluğu, ‘u’ ile mutsuzluğu ve ‘n’ ile de duygu ağırlığı nötr olan kelimeleri ifade eder. Bu gereksinimi karşılamak için büyük verilerle çalışırken bir kullanıcı arayüzü yapmak gereklidir. Çünkü araştırmacı bu adımda yapması gerekenleri kendi başına yaparsa zaman kaybına uğrayabilir.

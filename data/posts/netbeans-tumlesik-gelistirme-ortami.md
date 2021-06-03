@@ -4,8 +4,6 @@ slug: "netbeans-tumlesik-gelistirme-ortami"
 date: "22/10/2016"
 ---
 
-NetBeans Tümleşik Geliştirme Ortamı
-========================================
 1999 yılında Sun Microsystems tarafından alınana kadar bir Java TGO(Integrated Development Environment) projesi olan NetBeans, günümüzde Oracle tarafından geliştirilen, geniş kullanıcı tabanlı, açık kaynak kodlu çapraz-platform bir projedir.
 
 NetBeans Java Dili ile yazılmış bir yazılım geliştirme platformudur. Birincil amaç olarak Java’da yazılım geliştirmeyi amaçlayan ortam ayrıca başka dilleri de destekler. PHP, C/C++, ve HTML5 desteği olan geliştirme ortamının bir diğer tercih sebebi de PHP desteğinin olmasıdır.

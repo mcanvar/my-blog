@@ -4,8 +4,6 @@ slug: "veri-madenciligi-projesinin-gerceklestirilmesi"
 date: "25/12/2016"
 ---
 
-Veri Madenciliği Projesinin Gerçekleştirilmesi
-========================================
 Proje aşağıdaki temel iki adımda gerçekleştirildikten sonra yayınlanmak üzere internet sitesi Linux sunucu üzerinde kurulu MySQL, PHP ve Apache barındıran bir sunucuda, internet servisi ise Linux tabanlı Ubuntu işletim sistemi üzerine MYSQL ve Tomcat barındıran bir sunucuda yayınlanır.
 İnternet Sitesi
 
@@ -16,7 +14,7 @@ https://eksiveri.mevlutcanvar.com.tr İşaretlenmek üzere alınan girdi numaras
 Ek olarak bir Bootstrap ön yüz çatısı elemanı olan modal kullanılarak girdi numarası için açılır bir pencere tasarlanır. Bu pencere tek girdilik bir eleman taşır ve burası yardımı ile girdi numarasını alarak internet servisine gönderir. İnternet servisi gelen girdi numarasına göre yanıt üretir ve Json tipinde cevap üretir. İşaretlenmiş olarak gelen veri ilgili kontrolcü tarafından yakalanır ve yayınlanır.
 İşaretlenmiş olarak görüntülenen girdi. İşaretlenmiş olarak görüntülenen girdi.
 
-```
+```php
 public function index()
 {
 $this->load->model('Analyse_Model');
@@ -74,7 +72,7 @@ $this->render('analyse_view');
 Spring MVC internet servisi projesi olarak IntelliJ IDEA’da açılan projeye Maven yardımı ile gerekli bağımlılıklar inşa edilerek proje gerçekleştirilir. Gelen girdi numarası girdi UPA’sı olarak görev yapan ApiController tarafından yakalanarak, Hibernate ile ilgili modelden veriyi edinip, ilgili servis katmanına iletilir ve burada iş mantığı yürütülür. Servis katmanı girdiyi işaretleyerek kontrolcüye geri verir ve kontrolcü cevabı Json formatında isteği isteyen istemciye iletir.
 İşaretlenmek üzere Ekşi Sözlük’te yer alan girdi. İşaretlenmek üzere Ekşi Sözlük’te yer alan girdi.
 
-```
+```jsx
 @Service("ApiService")
 @Transactional
 public class ApiServiceImpl implements ApiService {

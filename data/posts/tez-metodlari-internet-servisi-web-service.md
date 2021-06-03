@@ -4,8 +4,6 @@ slug: "tez-metodlari-internet-servisi-web-service"
 date: "18/11/2016"
 ---
 
-Tez Metodları: İnternet Servisi (Web Service)
-========================================
 İnternet Servisleri HTTP protokolü üzerinden hizmet veren fonksiyonlar bütünüdür. Bir kullanıcının HTTP üzerinden bir web servisi kullanmasına denmektedir. HTPP üzerinden yapılan bu çağrımlara karşı sistem XML veya JSON çıktıları üretir.
 
 Veri transferi bu çıktılar sayesinde yapıldığı için platform bağımsız bir yapısı vardır. Bu sayede servisi kullanmak istediğiniz program parçasının hangi dilde yazıldığının pek bir önemi kalmamaktadır.

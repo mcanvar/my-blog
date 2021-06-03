@@ -4,8 +4,6 @@ slug: "veri-kavrami-ve-madenciligi"
 date: "28/10/2016"
 ---
 
-Veri Kavramı ve Madenciliği
-========================================
 Veri kavramı ortaya çıktığından beri hep saklanması için gerekli olan dosyalama sistemi çözümlerine ihtiyaç duymuştur. İlk veri saklama işleminden bu yana çok hızlı bir şekilde gelişen bilgisayar bilimleri bu alanda da çığır aşmıştır.
 
 Başlangıçta sıralı, dizinli veya algoritma hesaplarına dayalı olarak erişilebilen gibi klasik yöntemler ile diskte tutulan veri dosyaları paralel çalışabilen veri tabanı yönetim sistemlerinin ortaya çıkmasıyla birlikte yerini veri tabanı dosyalarına bırakmıştır. Bu sistemler verinin saklanmasında, okunmasında ve güncellenmesinde etkili çözümler sunmuştur ve günümüzde bu konudaki gelişmeler devam etmektedir.

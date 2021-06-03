@@ -4,8 +4,6 @@ slug: "projede-kullanilan-yontem-dil-arac-teknoloji-vb-secimindeki-sebepler"
 date: "23/10/2016"
 ---
 
-Projede Kullanılan Yöntem, Dil, Araç, Teknoloji vb. Seçimindeki Sebepler
-========================================
 Günümüze doğru geldikçe büyüyen içeriği ile artık günlük ortalama 25 000 girdi girilen bir platform olan Ekşi Sözlük çok yoğun bir veri akışına sahiptir. 2012’de açıkladığı istatistiklere göre günlük yüzbinlerce tekil organik ziyarete sahip, bu ziyaretçilerin %72’sinin birden çok sayfasını ziyaret ettiği, hemen çıkma oranının %7 gibi çok düşük bir oran olduğu ve birçok işletim sisteminden, tarayıcıdan mobil cihazlar dâhil olmak üzere takip edilen devasa bir veri deposudur.
 
 Barındırdığı verilerin tamamına yakını yazar olmayan, okuyucu kitlesi tarafından ulaşılabilir haldedir. Fakat tutulan bütün bu içeriğin formatı, yazarlara bırakıldığı için özellikle girdi verisi gibi binlerce karakter barındıran alanlarda veriyi temizlemek, seçmek, dönüştürmek, veri madenciliği yapmak, örüntüleri değerlendirmek ve bilgiyi sunabilmek; birçok araç/gereç, güçlü bir programlama dili, uygun bir mimari deseni gibi ortam ihtiyaçlarını doğurur. Bütün bu güçlü yapıyı ele alacak olan teknolojilerin geliştiricisine sunduğu hizmetin geniş çaplı, hızlı ve esnek olması beklenir. Aksi takdirde bu tür büyük veriler ile işlem yapmak sonu kestirilemez vakit ve emek kayıplarına sebebiyet verir.

@@ -4,8 +4,6 @@ slug: "mysql-for-excel-eklentisi"
 date: "22/10/2016"
 ---
 
-MySQL for Excel Eklentisi
-========================================
 Microsoft Office Excel Programı’nın veri sekmesinde yer alan bir eklentidir.
 
 Excel verilerini MySQL veri tabanlarına taşımak veya tam tersi işlemler yapmak için geliştirilmiş bir sihirbazı barındırır.

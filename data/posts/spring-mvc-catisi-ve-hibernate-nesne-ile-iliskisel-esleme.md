@@ -4,8 +4,6 @@ slug: "spring-mvc-catisi-ve-hibernate-nesne-ile-iliskisel-esleme"
 date: "19/10/2016"
 ---
 
-Spring MVC Çatısı ve Hibernate Nesne ile İlişkisel Eşleme
-========================================
 Spring MVC, Spring Çatısı’nın internet tabanlı bileşenidir. Güçlü internet(web) uygulamaları geliştirmek için birçok fonksiyonellik sunar.
 
 Bu çatı tasarlanırken yapıyı oluşturan her bir parçanın yüksek derecede yapılandırılabilir olmasına dikkat edilmiştir. Ayrıca diğer popüler web çatılarıyla ( Struts, WebWork, Java Server Faces ve Tapestry) entegre edilebilmektedir.
@@ -31,7 +29,7 @@ Hibernate gibi NİE araçlarıyla, bir nesneyi veri tabanına kaydetmek, yeni ha
 
 Örneğin klasik yöntem ile:
 
-```
+```php
 stmt.executeUpdate( "INSERT INTO KAHVE VALUES ('Colombian', 101, 7.99, 0, 0)");
 ```
 şeklinde yazılan işlem, Hibernate sayesinde nesneler ile:

@@ -4,8 +4,6 @@ slug: "bitirme-tezi-sonuclari-ve-degerlendirmesi"
 date: "10/01/2017"
 ---
 
-Bitirme Tezi Sonuçları ve Değerlendirmesi
-========================================
 ##Sonuçlar
 
 Ekşi Sözlük’te duygu analizi yaparak hizmet sunmayı hedefleyen bu çalışma duygu analizi yöntemleri kullanarak, makine öğrenmesi yoluyla başarılı olduğu için SMO algoritmasını tercih edilmiştir.
