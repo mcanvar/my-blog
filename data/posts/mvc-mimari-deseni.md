@@ -4,7 +4,6 @@ slug: "mvc-mimari-deseni"
 date: "23-10-2016"
 ---
 
-
 Mimari desenlerinin(software pattern) arkasındaki esas düşünce yüksek seviyeli etkileşimleri özümsemek ve nesneler arasındaki bu davranışları başka uygulamalarda tekrardan kullanabilmektir. Her bir desen tekrar tekrar oluşan bir problemi ele alır ve çözümün temelini açıklar. Daha sonra bu çözüm tekrar tekrar defalarca kullanılabilir.
 MVC Mimari Deseni’nin işleyiş şeması. MVC Mimari Deseni’nin işleyiş şeması.
 

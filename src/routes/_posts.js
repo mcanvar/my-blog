@@ -1,4 +1,3 @@
-const path = require("path");
 const fs = require("fs");
 const fm = require("front-matter");
 const marked = require("marked");
@@ -16,7 +15,7 @@ marked.setOptions({
 const posts = [];
 for (let i = 0; i < files.length; i++) {
 
-	if (path.extname(files[i]) !== ".md") continue;
+	if (files[i] === "en") continue;
 
 	const content = fs.readFileSync(`data/posts/${files[i]}`, { encoding: "utf-8" });
 	// Use the front-matter library to separate the body from the front matter
