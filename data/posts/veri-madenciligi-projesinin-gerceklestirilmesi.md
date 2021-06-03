@@ -1,5 +1,5 @@
 ---
-title: "p"
+title: "Veri Madencilığı Projesinin Gerçekleştirilmesi"
 slug: "veri-madenciligi-projesinin-gerceklestirilmesi"
 date: "25/12/2016"
 ---
