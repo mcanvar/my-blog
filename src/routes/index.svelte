@@ -1,4 +1,7 @@
-<script>
+<script context="module">
+    export function preload({ params, query }) {
+        return this.fetch("sitemap.xml");
+    }
 </script>
 
 <style>

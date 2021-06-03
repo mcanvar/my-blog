@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",
-    "export": "sapper export --legacy",
+    "export": "sapper export --legacy --concurrent 1",
     "start": "node __sapper__/build",
-    "deploy": "sapper export --legacy  --concurrent 1 &&  gh-pages -d __sapper__/export"
+    "deploy": "npm run export && gh-pages -d __sapper__/export"
   },
   "dependencies": {
     "compression": "^1.7.1",
