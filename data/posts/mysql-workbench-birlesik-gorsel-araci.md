@@ -4,8 +4,6 @@ slug: "mysql-workbench-birlesik-gorsel-araci"
 date: "22/10/2016"
 ---
 
-MySQL Workbench Birleşik Görsel Aracı
-========================================
 MySQL sunucularıyla ve veri tabanlarıyla çalışmak için yaratılmış grafiksel bir araçtır.
 
 MySQL 5.1 ve üstünü tam olarak, MySQL Server 5.0’ı ise büyük bir çoğunlukla destekler.

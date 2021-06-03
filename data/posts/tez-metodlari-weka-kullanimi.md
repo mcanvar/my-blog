@@ -4,8 +4,6 @@ slug: "tez-metodlari-weka-kullanimi"
 date: "16/10/2016"
 ---
 
-Tez Metodları: Weka Kullanımı
-========================================
 Weka makine öğrenmesi algoritmalarının ve veri ön işleme araçlarının bir araya getirildiği, akademik çalışmalarda sıklıkla kullanılan, açık kaynak kodlu bir veri madenciliği programıdır.
 
 WEKA Yeni Zelanda Waikito Üniversitesinde, nesne yönelimli programlama dillerinden biri olan Java ile geliştirilmiş ve halen yeni sürümleri geliştirilmeye devam etmektedir.

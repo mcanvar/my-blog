@@ -4,8 +4,6 @@ slug: "import-io-ozellestirilmis-tarayicisi"
 date: "22/10/2016"
 ---
 
-Import.io Özelleştirilmiş Tarayıcısı
-========================================
 Servisin kullanıcıları için kendilerine özel UPA([API](https://mevlutcanvar.com.tr/import-io-uygulama-programlama-arayuzu)) ’lar tasarlamaları için görsel arayüz sunan, açık kaynak kodlu Mozilla Firefox tabanlı bir tarayıcı araçtır.
 
 Sadece bu araç üzerinden verilerin tanımlanması ve üzerinde işlem yapılmasına izin verilir.

@@ -4,8 +4,6 @@ slug: "github-sdp-yardimiyla-namecheapden-ucretsiz-me-alan-adi-alimi"
 date: "08/042016"
 ---
 
-GitHub SDP yardımıyla Namecheap'den ücretsiz .me Alan Adı Alımı
-========================================
 [GitHub Student Developer Pack](https://education.github.com/pack) öğrencilere birçok fırsat sunuyor. Bunlardan birtanesi ise Namecheap alan adı firmasının ücretsiz .me uzantılı alan adı. Bu fırsatlardan yararlanmamız için okulumuzun verdiği öğrenci mail adresi aracılığı ile öğrenci olduğumuzu kanıtlamamız isteniyor.
 
 Üyelik alımından başlayarak kısaca nasıl bir alan adına sahip olup, ad sunucusu(nameserver) bilgilerini güncelleyebiliriz görelim:

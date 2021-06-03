@@ -4,8 +4,6 @@ slug: "intellij-idea-tumlesik-gelistirme-ortami"
 date: "23/10/2016"
 ---
 
-IntelliJ IDEA Tümleşik Geliştirme Ortamı
-========================================
 IntelliJ IDEA’nın ilk sürümü Ocak 2001’de yayınlanmıştır.
 
 Java IDE’leri arasında gelişmiş kodda gezinme ve kodları yeniden düzenleme özellikli ilk IDE‘lerden bir tanesidir.

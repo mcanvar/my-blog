@@ -4,8 +4,6 @@ slug: "import-io-uygulama-programlama-arayuzu"
 date: "19/11/2016"
 ---
 
-import.io Uygulama Programlama Arayüzü
-========================================
 Eylül 2013 de beta sürümüyle yayınlanan servis, herhangi bir kod yazmadan bile veri ayıklayabilen internet tabanlı bir platformdur. İçinde yer alan araçlar kullanıcının tamamen kendisinin tıklamalarıyla oluşturulan basit makine öğrenmeleriyle kullanıcılarına kendilerine özel UPA(Application Programming Interface) oluşturmalarına izin verir.
 
 Basitçe, kullanıcılar veri elde etmek istedikleri internet sitesini ziyaret eder, elde etmek istediği verileri tiplerine göre tablo sütunlarına yerleştirip, tabloları isimlendirir ve bu verileri elde ettiği sayfalarda bir dizi alıştırmalar yaparak algoritmalar üzerinde makine öğrenmesi yaparlar. Elde edilmiş değerli veri import.io’nun bulut sistemlerinde depolanır ve kullanıcının kendine has UPA’sı ile sorgulanabilir hale gelir. Veriler ayrıca bulut sisteminden CSV, Excel, Google Sheets veya JSON dosyaları olarak indirilebilir, HTML, JSON ve XML çıktıları olarak sorgulanabilir, paylaşılabilir.

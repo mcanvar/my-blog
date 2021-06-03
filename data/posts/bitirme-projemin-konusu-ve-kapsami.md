@@ -4,8 +4,6 @@ slug: "bitirme-projemin-konusu-ve-kapsami"
 date: "15/09/2016"
 ---
 
-Bitirme Projemin Konusu ve Kapsamı
-========================================
 Veri madenciliği algoritmalarından bir veya birkaç tanesinin özelleştirilmesiyle oluşturulan veri motoru sayesinde, sözlükten elde edilen ham verilerin işlenip, üretilen verinin görsel bir arayüz aracılığıyla kullanıcıya servis edilmesidir.
 
 

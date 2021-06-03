@@ -4,8 +4,6 @@ slug: "bitirme-projemin-tanimi-ve-amaci"
 date: "17/09/2016"
 ---
 
-Bitirme Projemin Tanımı ve Amacı
-========================================
 Projenin başlangıç sürümünden hedeflenen; tam tepkisel ana sayfada bir zaman tüneli barındırması ve bu sayfada bir analiz butonu ile tetiklenen kayan pencerenin belirmesi ile kullanıcının buraya yazacağı girdi numarası alınır.
 
 Alınan bu girdi numarası Java tabanlı Spring MVC Çatısı kullanılarak gerçekleştirilmiş internet servisine analiz edilmek üzere iletilir. Makine öğrenmesi ile gerçekleştirilen veri madenciliği algoritmasından bu sayede analizi gerçekleştirilen girdi duygu etiketi eklendikten sonra isteğe cevaben Json dosyası formatında iletilir. Bu şekilde analizi gerçekleşen girdiler zaman tüneli kuyruğuna eklenir.

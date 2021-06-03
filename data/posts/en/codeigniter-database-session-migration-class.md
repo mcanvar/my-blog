@@ -4,8 +4,6 @@ slug: "codeigniter-database-session-migration-class"
 date: "16/11/2016"
 ---
 
-CodeIgniter Database Session Migration Class
-========================================
 This is just the copy of the Turkish one. I would like to share in english because there is some traffic out of my country.
 
 For instance, user guide says us using Codeigniter Framework’s sessions on the database needs below steps:
@@ -21,7 +19,7 @@ You can NOT use a connection with the cache_on setting enabled.
 
 In order to use the ‘database’ session driver, you must also create this table that we already mentioned and then set it as your `$config['sess_save_path']` value. For example, if you would like to use ‘ci_sessions’ as your table name, you would do this:
 
-```
+```php
     $config['sess_driver'] = 'database';
     $config['sess_save_path'] = 'ci_sessions';
 ```
@@ -30,7 +28,7 @@ And then of course, create the database table …
 
 For MySQL:
 
-```
+```sql
     CREATE TABLE IF NOT EXISTS `ci_sessions` (
             `id` varchar(40) NOT NULL,
             `ip_address` varchar(45) NOT NULL,
@@ -45,7 +43,7 @@ Of course these sql queries for direct using. If we want to implement it by usin
 
 This is from user guide’s migration section:
 
-```
+```php
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -90,7 +88,7 @@ For make it work this class, we need to create a migration file on the applicati
 
 Finally, this is our the migration controller file:
 
-```
+```php
 <?php
 
 class Migrate extends CI_Controller

@@ -4,8 +4,6 @@ slug: "planlama-2-elde-edilen-verinin-islenmesi-ve-veri-tabanina-kaydi"
 date: "23/09/2016"
 ---
 
-Planlama: 2. Elde Edilen Verinin İşlenmesi ve Veri Tabanına Kaydı
-========================================
 Önceki adımdan elde edilen verilerin bir mantık motorundan geçirilmesi gerekir. Bu
 motorun PHP betik programlama dili ile yapılandırılacağı ve elde edilen girdi dizinin
 her bir öğesinin veri madenciliği yöntemleri ile programlanan algoritmadan geçirilip

@@ -4,8 +4,6 @@ slug: "uygulama-metodlari-egitim-kumesinin-elde-edilmesi"
 date: "21/11/2016"
 ---
 
-Uygulama Metodları: Eğitim Kümesinin Elde Edilmesi
-========================================
 Sürecin ilk aşamasının hedefi olan eğitim kümesini elde etmek için [Ekşi Sözlük](https://mevlutcanvar.com.tr/eksi-sozlukte-veri-madenciligi)‘ün herhangi bir UPA’sı olmadığı için küme HTTP istekleri ile elde edilecektir. Bunun için [import.io özelleştirilmiş tarayıcısı](https://mevlutcanvar.com.tr/import-io-ozellestirilmis-tarayicisi) kullanılacaktır.
 
 Eğitim kümesi için planlanan girdi sayısı 10.000’dir. Bu girdiler, Türkiye’nin toplumsal olarak yaşadığı 5 mutsuz gün, 5 mutlu gün ve 10 tane de 2009 yılından günümüze kadarki süreçten rasgele günler seçilerek sözlüğün o günkü en çok beğenilen başlıklar sıralaması ile sıralanmış ve sayfa linkleri site tarayıcısına verilmek üzere toplanmıştır.

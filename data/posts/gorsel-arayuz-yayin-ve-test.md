@@ -4,8 +4,6 @@ slug: "gorsel-arayuz-yayin-ve-test"
 date: "23/09/2016"
 ---
 
-Planlama: 3, 4 ve 5 Görsel Arayüz, Yayın ve Test
-========================================
 ## Görsel Arayüzün Belirlenmesi
 
 

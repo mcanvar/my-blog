@@ -4,8 +4,6 @@ slug: "html-isaretleme-dili-ve-css-stil-sablonlari"
 date: "25/09/2016"
 ---
 
-HTML İşaretleme Dili ve CSS Stil Şablonları
-========================================
 ##HTML
 
 HTML, temelleri 1990 yılında atılan, internet sayfalarını oluşturmak için kullanılan standart bir işaretleme dilidir. Bir programlama dili değildir, sadece çeşitli yorumlayıcılar (tarayıcılar vs.) tarafından yorumlanır.
@@ -14,7 +12,7 @@ Temel görevleri içerikleri ve bu içerikleri barındıran sayfaları birbirine
 
 HTML etiketleri küçüktür ve büyüktür karakterleri arasına yazılır ve aynı etiket kapanışta başına “/” karakteri alarak yinelenir, böylece bir eleman oluşur. Yapı hiyerarşiktir ve bazı elemanlar kapanış etiketine ihtiyaç duymazlar. Örneğin en basit haliyle bir HTML sayfası şu şekilde olabilir:
 
-```
+```html
 <HTML>
     <HEAD>
         <TITLE>Merhaba Dünya!</TITLE>

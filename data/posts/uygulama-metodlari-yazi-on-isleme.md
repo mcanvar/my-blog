@@ -4,8 +4,6 @@ slug: "uygulama-metodlari-yazi-on-isleme"
 date: "30/10/2016"
 ---
 
-Uygulama Metodları: Yazı Ön İşleme
-========================================
 Verimiz artık uygun bir ortamda bulunduğu için [veri madenciliği ön hazırlık süreci](https://mevlutcanvar.com.tr/veri-madenciligi-asamalari#on-isleme-ve-veriyi-temizleme)ne tabi tutulabilir haldedir. Sırasıyla aşağıdaki adımlar izlenerek veri istenilen şekle sokulur.
 
 Gereksiz Girdilerin Silinmesi

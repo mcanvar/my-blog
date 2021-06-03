@@ -4,12 +4,10 @@ slug: "php-betik-programlama-dili"
 date: "15/10/2016"
 ---
 
-PHP Betik Programlama Dili
-========================================
 Geniş bir kullanıcı kitlesine sahip, açık kaynak kodlu, HTML içerisine gömülebilen betik bir dildir. 1995 yılında Rasmus Lerdorf tarafından ilk kez gün yüzüne çıkarılan PHP’nin geliştirilme süreci günümüzde PHP Topluğu tarafından sürdürülmektedir.
 PHP JavaScript’in aksine sunucu taraflı çalışır ve genel kullanım örneği olarak sunucunun ürettiği html çıktılarının kaynağıdır. “<?php” etiketi ile PHP Kitine giriş yapılır ve “?>” etiketi ile çıkış yapılır. Örneğin bir HTML sayfasının başlığı şu şekilde tanımlanabilir:
 
-```
+```html
 <HEAD>
     <?php echo “Bu bir PHP betik başlığıdır.”; ?>
 </HEAD>
