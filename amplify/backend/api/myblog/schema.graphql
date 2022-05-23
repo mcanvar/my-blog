@@ -1,0 +1,24 @@
+# noinspection GraphQLDuplicateDirective
+type Post
+@model
+@auth (rules: [
+  {allow: owner, operations: [create, update, delete, read] }
+  {allow: private, operations: [read] }
+  {allow: public, operations: [read] }
+]) {
+  id: ID!
+  title: String!
+  comments: [Comment] @hasMany
+}
+
+type Comment
+@model
+@auth (rules: [
+  {allow: owner, operations: [create, update, delete, read] }
+  {allow: private, operations: [read] }
+  {allow: public, operations: [read] }
+]) {
+  id: ID!
+  post: Post @belongsTo
+  content: String!
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "myblog",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/mevlutcanvar/repos/work/my-blog/amplify/backend/api/myblog/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7,
+      "apiKeyExpirationDate": "2022-05-30T22:56:33.273Z",
+      "keyDescription": ""
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authmyblog69565ec0"
+      }
+    ]
+  }
+}
