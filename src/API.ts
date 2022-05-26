@@ -4,11 +4,17 @@
 
 export type CreatePostInput = {
   id?: string | null,
+  language: string,
   title: string,
+  slug: string,
+  content: string,
 };
 
 export type ModelPostConditionInput = {
+  language?: ModelStringInput | null,
   title?: ModelStringInput | null,
+  slug?: ModelStringInput | null,
+  content?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
@@ -57,7 +63,10 @@ export type ModelSizeInput = {
 export type Post = {
   __typename: "Post",
   id: string,
+  language: string,
   title: string,
+  slug: string,
+  content: string,
   comments?: ModelCommentConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -83,7 +92,10 @@ export type Comment = {
 
 export type UpdatePostInput = {
   id: string,
+  language?: string | null,
   title?: string | null,
+  slug?: string | null,
+  content?: string | null,
 };
 
 export type DeletePostInput = {
@@ -132,7 +144,10 @@ export type DeleteCommentInput = {
 
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
+  language?: ModelStringInput | null,
   title?: ModelStringInput | null,
+  slug?: ModelStringInput | null,
+  content?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
@@ -162,7 +177,10 @@ export type CreatePostMutation = {
   createPost?:  {
     __typename: "Post",
     id: string,
+    language: string,
     title: string,
+    slug: string,
+    content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -191,7 +209,10 @@ export type UpdatePostMutation = {
   updatePost?:  {
     __typename: "Post",
     id: string,
+    language: string,
     title: string,
+    slug: string,
+    content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -220,7 +241,10 @@ export type DeletePostMutation = {
   deletePost?:  {
     __typename: "Post",
     id: string,
+    language: string,
     title: string,
+    slug: string,
+    content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -252,7 +276,10 @@ export type CreateCommentMutation = {
     post?:  {
       __typename: "Post",
       id: string,
+      language: string,
       title: string,
+      slug: string,
+      content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -281,7 +308,10 @@ export type UpdateCommentMutation = {
     post?:  {
       __typename: "Post",
       id: string,
+      language: string,
       title: string,
+      slug: string,
+      content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -310,7 +340,10 @@ export type DeleteCommentMutation = {
     post?:  {
       __typename: "Post",
       id: string,
+      language: string,
       title: string,
+      slug: string,
+      content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -335,7 +368,10 @@ export type GetPostQuery = {
   getPost?:  {
     __typename: "Post",
     id: string,
+    language: string,
     title: string,
+    slug: string,
+    content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -367,7 +403,10 @@ export type ListPostsQuery = {
     items:  Array< {
       __typename: "Post",
       id: string,
+      language: string,
       title: string,
+      slug: string,
+      content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -391,7 +430,10 @@ export type GetCommentQuery = {
     post?:  {
       __typename: "Post",
       id: string,
+      language: string,
       title: string,
+      slug: string,
+      content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -423,7 +465,10 @@ export type ListCommentsQuery = {
       post?:  {
         __typename: "Post",
         id: string,
+        language: string,
         title: string,
+        slug: string,
+        content: string,
         createdAt: string,
         updatedAt: string,
         owner?: string | null,
@@ -446,7 +491,10 @@ export type OnCreatePostSubscription = {
   onCreatePost?:  {
     __typename: "Post",
     id: string,
+    language: string,
     title: string,
+    slug: string,
+    content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -474,7 +522,10 @@ export type OnUpdatePostSubscription = {
   onUpdatePost?:  {
     __typename: "Post",
     id: string,
+    language: string,
     title: string,
+    slug: string,
+    content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -502,7 +553,10 @@ export type OnDeletePostSubscription = {
   onDeletePost?:  {
     __typename: "Post",
     id: string,
+    language: string,
     title: string,
+    slug: string,
+    content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -533,7 +587,10 @@ export type OnCreateCommentSubscription = {
     post?:  {
       __typename: "Post",
       id: string,
+      language: string,
       title: string,
+      slug: string,
+      content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -561,7 +618,10 @@ export type OnUpdateCommentSubscription = {
     post?:  {
       __typename: "Post",
       id: string,
+      language: string,
       title: string,
+      slug: string,
+      content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -589,7 +649,10 @@ export type OnDeleteCommentSubscription = {
     post?:  {
       __typename: "Post",
       id: string,
+      language: string,
       title: string,
+      slug: string,
+      content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,

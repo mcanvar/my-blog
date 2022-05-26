@@ -9,7 +9,10 @@ export const createPost = /* GraphQL */ `
   ) {
     createPost(input: $input, condition: $condition) {
       id
+      language
       title
+      slug
+      content
       comments {
         items {
           id
@@ -34,7 +37,10 @@ export const updatePost = /* GraphQL */ `
   ) {
     updatePost(input: $input, condition: $condition) {
       id
+      language
       title
+      slug
+      content
       comments {
         items {
           id
@@ -59,7 +65,10 @@ export const deletePost = /* GraphQL */ `
   ) {
     deletePost(input: $input, condition: $condition) {
       id
+      language
       title
+      slug
+      content
       comments {
         items {
           id
@@ -86,7 +95,10 @@ export const createComment = /* GraphQL */ `
       id
       post {
         id
+        language
         title
+        slug
+        content
         comments {
           nextToken
         }
@@ -111,7 +123,10 @@ export const updateComment = /* GraphQL */ `
       id
       post {
         id
+        language
         title
+        slug
+        content
         comments {
           nextToken
         }
@@ -136,7 +151,10 @@ export const deleteComment = /* GraphQL */ `
       id
       post {
         id
+        language
         title
+        slug
+        content
         comments {
           nextToken
         }
