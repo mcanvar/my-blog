@@ -1,7 +1,9 @@
-import type { NextPage } from "next";
-import Head from "next/head";
+import type { NextPage } from "next"
+import Head from "next/head"
+import { useAuth } from "../context/AuthContext"
 
 const Home: NextPage = () => {
+  const { user } = useAuth()
   return (
     <div className="">
       <Head>
@@ -11,12 +13,15 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="min-h-screen grid place-content-center">
-        <h1 className="text-3xl font-bold">Hello world!</h1>
+        <h1 className="text-3xl font-bold">
+          {/*@ts-ignore*/}
+          Hello {user ? user.attributes.email : "world!"}!
+        </h1>
       </main>
 
       <footer className=""></footer>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

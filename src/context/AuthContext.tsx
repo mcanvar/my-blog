@@ -36,8 +36,8 @@ const AuthContextProvider: Function = ({ children }: Props): ReactElement => {
   }
 
   useEffect(() => {
-    Hub.listen("auth", () => checkUser())
     checkUser()
+    Hub.listen("auth", () => checkUser())
   }, [])
 
   return (

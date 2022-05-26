@@ -3,7 +3,9 @@ import Head from "next/head"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Auth } from "aws-amplify"
 import { useAuth } from "../context/AuthContext"
-
+import { useState } from "react"
+import { CognitoUser } from "@aws-amplify/auth"
+import { useRouter } from "next/router"
 interface SignUpForm {
   email: string
   password: string
@@ -11,35 +13,69 @@ interface SignUpForm {
 }
 
 const SignUp: NextPage = () => {
-  const { user, setUser } = useAuth()
+  const { user } = useAuth()
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<SignUpForm>()
+  const [codeRequired, setCodeRequired] = useState<boolean>(false)
+  const router = useRouter()
 
-  const onSubmit: SubmitHandler<SignUpForm> = (data) => {
-    signUpWithCredentials(data)
+  const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
+    if (codeRequired) {
+      confirmSignUp(data)
+
+      return
+    }
+
+    await signUpWithCredentials(data)
+    setCodeRequired(true)
   }
 
   const signUpWithCredentials: Function = async ({
     email: username,
     password,
-  }: SignUpForm) => {
+  }: SignUpForm): Promise<CognitoUser> => {
     try {
-      const { user } = await Auth.signUp({
+      const { user: amplifyUser } = await Auth.signUp({
         username,
         password,
       })
 
-      console.log("Signed up: ", user)
+      console.log("Signed up: ", amplifyUser)
+
+      return amplifyUser
     } catch (e) {
       console.error("Sign up error: ", e)
       throw e
     }
   }
 
+  const confirmSignUp: Function = async ({
+    email: username,
+    password,
+    code,
+  }: SignUpForm) => {
+    try {
+      await Auth.confirmSignUp(username, code)
+      const amplifyUser = await Auth.signIn({
+        username,
+        password,
+      })
+
+      if (amplifyUser) router.push("/")
+      else throw new Error("Sign in failed!")
+
+      console.log("Signed in: ", amplifyUser)
+    } catch (e) {
+      console.error("Sign in error: ", e)
+      throw e
+    }
+  }
+
   console.log("Hook up: ", user)
+  if (user) router.push("/")
 
   return (
     <>
@@ -98,7 +134,9 @@ const SignUp: NextPage = () => {
                   <input
                     id="password"
                     type="password"
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${
+                      codeRequired ? "" : "rounded-b-md"
+                    }`}
                     placeholder="Password"
                     {...register("password", {
                       required: {
@@ -112,6 +150,33 @@ const SignUp: NextPage = () => {
                     })}
                   />
                 </div>
+                {codeRequired && (
+                  <div>
+                    <label htmlFor="code" className="sr-only">
+                      Code
+                    </label>
+                    <input
+                      id="code"
+                      type="code"
+                      className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Your code"
+                      {...register("code", {
+                        required: {
+                          value: true,
+                          message: "Please enter the code.",
+                        },
+                        minLength: {
+                          value: 6,
+                          message: "Code must be 6 digits.",
+                        },
+                        maxLength: {
+                          value: 6,
+                          message: "Code must be 6 digits.",
+                        },
+                      })}
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center justify-between">
@@ -159,7 +224,7 @@ const SignUp: NextPage = () => {
                     {/*  aria-hidden="true"*/}
                     {/*/>*/}
                   </span>
-                  Sign up
+                  {codeRequired ? "Sign In" : "Sign up"}
                 </button>
               </div>
             </form>
