@@ -13,6 +13,8 @@ const Navbar: FC = () => (
     <div className="mb-2 mx-2 relative">
       <input
         type="text"
+        disabled
+        hidden
         className="bg-nature-darker text-sm rounded-full py-1 px-2 h-8 w-8 focus:w-full focus:shadow-outline focus:outline-none"
         placeholder=""
       />
