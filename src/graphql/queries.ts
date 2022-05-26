@@ -6,7 +6,10 @@ export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
       id
+      language
       title
+      slug
+      content
       comments {
         items {
           id
@@ -33,7 +36,10 @@ export const listPosts = /* GraphQL */ `
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        language
         title
+        slug
+        content
         comments {
           nextToken
         }
@@ -51,7 +57,10 @@ export const getComment = /* GraphQL */ `
       id
       post {
         id
+        language
         title
+        slug
+        content
         comments {
           nextToken
         }
@@ -78,7 +87,10 @@ export const listComments = /* GraphQL */ `
         id
         post {
           id
+          language
           title
+          slug
+          content
           createdAt
           updatedAt
           owner

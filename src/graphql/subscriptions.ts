@@ -6,7 +6,10 @@ export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost($owner: String) {
     onCreatePost(owner: $owner) {
       id
+      language
       title
+      slug
+      content
       comments {
         items {
           id
@@ -28,7 +31,10 @@ export const onUpdatePost = /* GraphQL */ `
   subscription OnUpdatePost($owner: String) {
     onUpdatePost(owner: $owner) {
       id
+      language
       title
+      slug
+      content
       comments {
         items {
           id
@@ -50,7 +56,10 @@ export const onDeletePost = /* GraphQL */ `
   subscription OnDeletePost($owner: String) {
     onDeletePost(owner: $owner) {
       id
+      language
       title
+      slug
+      content
       comments {
         items {
           id
@@ -74,7 +83,10 @@ export const onCreateComment = /* GraphQL */ `
       id
       post {
         id
+        language
         title
+        slug
+        content
         comments {
           nextToken
         }
@@ -96,7 +108,10 @@ export const onUpdateComment = /* GraphQL */ `
       id
       post {
         id
+        language
         title
+        slug
+        content
         comments {
           nextToken
         }
@@ -118,7 +133,10 @@ export const onDeleteComment = /* GraphQL */ `
       id
       post {
         id
+        language
         title
+        slug
+        content
         comments {
           nextToken
         }
