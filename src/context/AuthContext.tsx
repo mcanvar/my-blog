@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react"
-import { CognitoUser } from "amazon-cognito-identity-js"
+import { CognitoUser } from "@aws-amplify/auth"
 import { Auth, Hub } from "aws-amplify"
 
 interface AuthContextType {
