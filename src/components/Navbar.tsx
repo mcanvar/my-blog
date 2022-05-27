@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Link from 'next/link'
 
 const Navbar: FC = () => (
-  <nav className="bg-nature-dark text-nature-light z-20 fixed flex flex-col items-center h-screen top-0 left-0">
+  <nav className="bg-nature-dark w-1/12 text-nature-light z-20 fixed flex flex-col items-center h-screen top-0 left-0">
     <div className="mb-6 mt-2">
       <img
         className="rounded-full w-8 h-8"
