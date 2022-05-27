@@ -1,5 +1,5 @@
-import { FC } from "react"
-import Link from "next/link"
+import { FC } from 'react'
+import Link from 'next/link'
 
 const Navbar: FC = () => (
   <nav className="bg-nature-dark text-nature-light z-20 fixed flex flex-col items-center h-screen top-0 left-0">

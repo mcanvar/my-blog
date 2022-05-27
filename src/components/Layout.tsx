@@ -1,6 +1,6 @@
-import Head from "next/head"
-import { ReactElement, FC } from "react"
-import Navbar from "./Navbar"
+import Head from 'next/head'
+import { ReactElement, FC } from 'react'
+import Navbar from './Navbar'
 
 interface LayoutProps {
   children: ReactElement

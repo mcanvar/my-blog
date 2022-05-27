@@ -1,11 +1,12 @@
-import type { NextPage } from "next"
-import Head from "next/head"
-import { SubmitHandler, useForm } from "react-hook-form"
-import { Auth } from "aws-amplify"
-import { useAuth } from "../context/AuthContext"
-import { useState } from "react"
-import { CognitoUser } from "@aws-amplify/auth"
-import { useRouter } from "next/router"
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Auth } from 'aws-amplify'
+import { useAuth } from '../context/AuthContext'
+import { useState } from 'react'
+import { CognitoUser } from '@aws-amplify/auth'
+import { useRouter } from 'next/router'
+
 interface SignUpForm {
   email: string
   password: string
@@ -43,11 +44,11 @@ const SignUp: NextPage = () => {
         password,
       })
 
-      console.log("Signed up: ", amplifyUser)
+      console.log('Signed up: ', amplifyUser)
 
       return amplifyUser
     } catch (e) {
-      console.error("Sign up error: ", e)
+      console.error('Sign up error: ', e)
       throw e
     }
   }
@@ -64,18 +65,18 @@ const SignUp: NextPage = () => {
         password,
       })
 
-      if (amplifyUser) router.push("/")
-      else throw new Error("Sign in failed!")
+      if (amplifyUser) router.push('/')
+      else throw new Error('Sign in failed!')
 
-      console.log("Signed in: ", amplifyUser)
+      console.log('Signed in: ', amplifyUser)
     } catch (e) {
-      console.error("Sign in error: ", e)
+      console.error('Sign in error: ', e)
       throw e
     }
   }
 
-  console.log("Hook up: ", user)
-  if (user) router.push("/")
+  console.log('Hook up: ', user)
+  if (user) router.push('/')
 
   return (
     <>
@@ -98,7 +99,7 @@ const SignUp: NextPage = () => {
                 Sign up a new account
               </h2>
               <p className="mt-2 text-center text-sm text-gray-600">
-                Or{" "}
+                Or{' '}
                 <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -119,10 +120,10 @@ const SignUp: NextPage = () => {
                     type="email"
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Your email"
-                    {...register("email", {
+                    {...register('email', {
                       required: {
                         value: true,
-                        message: "Please enter an email.",
+                        message: 'Please enter an email.',
                       },
                     })}
                   />
@@ -135,17 +136,17 @@ const SignUp: NextPage = () => {
                     id="password"
                     type="password"
                     className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${
-                      codeRequired ? "" : "rounded-b-md"
+                      codeRequired ? '' : 'rounded-b-md'
                     }`}
                     placeholder="Password"
-                    {...register("password", {
+                    {...register('password', {
                       required: {
                         value: true,
-                        message: "Please enter a password.",
+                        message: 'Please enter a password.',
                       },
                       minLength: {
                         value: 8,
-                        message: "Please enter a stronger password.",
+                        message: 'Please enter a stronger password.',
                       },
                     })}
                   />
@@ -160,18 +161,18 @@ const SignUp: NextPage = () => {
                       type="code"
                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                       placeholder="Your code"
-                      {...register("code", {
+                      {...register('code', {
                         required: {
                           value: true,
-                          message: "Please enter the code.",
+                          message: 'Please enter the code.',
                         },
                         minLength: {
                           value: 6,
-                          message: "Code must be 6 digits.",
+                          message: 'Code must be 6 digits.',
                         },
                         maxLength: {
                           value: 6,
-                          message: "Code must be 6 digits.",
+                          message: 'Code must be 6 digits.',
                         },
                       })}
                     />
@@ -224,7 +225,7 @@ const SignUp: NextPage = () => {
                     {/*  aria-hidden="true"*/}
                     {/*/>*/}
                   </span>
-                  {codeRequired ? "Sign In" : "Sign up"}
+                  {codeRequired ? 'Sign In' : 'Sign up'}
                 </button>
               </div>
             </form>
