@@ -15,11 +15,11 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
+      <header className=" w-1/12 relative">
         <Navbar />
       </header>
 
-      <main className="min-h-screen grid place-content-center">{children}</main>
+      <main className="h-screen w-11/12">{children}</main>
 
       <footer className=""></footer>
     </>
