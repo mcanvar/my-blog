@@ -24,7 +24,7 @@ const Navbar: FC = () => (
       </div>
     </div>
     <Link href="/">
-      <a className="flex py-2 w-full justify-start px-4 hover:text-nature-lighter hover:justify-center">
+      <a className="flex py-2 w-full justify-start px-2 hover:text-nature-lighter hover:justify-center">
         {/* TODO: MAKE NAVBAR COLLAPSABLE */}
         <span className="hidden">HomepageIcon</span>
         <span className="ml-1 text-lg leading-5">Homepage</span>
