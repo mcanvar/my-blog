@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Auth } from 'aws-amplify'
 import { useAuth } from '../context/AuthContext'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CognitoUser } from '@aws-amplify/auth'
 import { useRouter } from 'next/router'
 
@@ -22,6 +22,12 @@ const SignUp: NextPage = () => {
   } = useForm<SignUpForm>()
   const [codeRequired, setCodeRequired] = useState<boolean>(false)
   const router = useRouter()
+
+  useEffect(() => {
+    if (router && router.query) {
+      router.push('/')
+    }
+  }, [router])
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
     if (codeRequired) {
@@ -75,7 +81,6 @@ const SignUp: NextPage = () => {
     }
   }
 
-  console.log('Hook up: ', user)
   if (user) router.push('/')
 
   return (
