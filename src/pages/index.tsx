@@ -74,8 +74,6 @@ const Home: NextPage = () => {
     fetchLastSixPosts()
   }, [])
 
-  console.log('POSTS:', posts)
-
   return (
     <div className="flex flex-col h-screen justify-around gap-2 w-full">
       <h1 className="h-2/12 text-3xl font-bold mt-2 place-self-center">
