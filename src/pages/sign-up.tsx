@@ -23,6 +23,7 @@ const SignUp: NextPage = () => {
   const [codeRequired, setCodeRequired] = useState<boolean>(false)
   const router = useRouter()
 
+  // Sign up disabled!
   useEffect(() => {
     if (router && router.query) {
       router.push('/')
