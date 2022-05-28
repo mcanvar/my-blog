@@ -6,7 +6,6 @@ import { ListPostsQuery, Post } from '../API'
 import { API } from 'aws-amplify'
 import { listPosts } from '../graphql/queries'
 import { GraphQLQuery } from '@aws-amplify/api'
-import Link from 'next/link'
 
 const Home: NextPage = () => {
   const [posts, setPosts] = useState<Post[]>([])
@@ -84,6 +83,7 @@ const Home: NextPage = () => {
         {posts && loaded
           ? posts.map((post, index) => (
               <Card
+                key={index}
                 title={post.title}
                 slug={post.slug}
                 imgSrc={
