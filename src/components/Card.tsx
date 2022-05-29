@@ -11,10 +11,6 @@ interface CardProps {
   imgSrc: string | StaticImport
   children?: ReactElement | ReactElement[]
   order?: Number
-  bgClass?: string
-  textClass?: string
-  colSpan?: Number
-  rowSpan?: Number
   loaded?: boolean
 }
 
@@ -25,18 +21,10 @@ const Card: FC<CardProps> = ({
   imgSrc,
   order = 1,
   children,
-  bgClass = 'bg-indigo-600',
-  textClass = 'text-white',
-  colSpan = 1,
-  rowSpan = 1,
   loaded = false,
 }) => (
   <Link key={slug} href={`/${encodeURIComponent(slug)}`}>
-    <a
-      className={`${bgClass} lg:order-${order} 2xl:order-${order} ${textClass} lg:row-span-${rowSpan} 2xl:row-span-${rowSpan} lg:col-span-${colSpan} 2xl:col-span-${colSpan} rounded-lg shadow-xl ${
-        !loaded && 'animate-pulse'
-      }`}
-    >
+    <a className={`card-${order} ${!loaded && 'animate-pulse'}`}>
       <div className="mx-9 my-8 2xl:mx-10">
         {loaded ? (
           <div className="w-8 md:w-9 relative lg:w-10 2xl:w-20 h-8 md:h-9 lg:h-10 2xl:h-20 rounded-full border-2 ml-1 lg:ml-3 2xl:ml-0 md:-mt-1 2xl:-mt-4">
@@ -59,7 +47,7 @@ const Card: FC<CardProps> = ({
           )}
         </h4>
         <h4
-          className={`${textClass} text-opacity-50 text-xs md:text-base ${
+          className={`text-xs md:text-base ${
             !loaded && 'pt-1'
           } 2xl:text-2xl pl-12 lg:pl-16 2xl:pl-20 2xl:my-2 2xl:mx-8`}
         >
@@ -82,7 +70,7 @@ const Card: FC<CardProps> = ({
         </h2>
         <br />
         <div
-          className={`${textClass} text-opacity-50 font-medium md:text-sm 2xl:text-3xl px-7 lg:px-9 mb-3 2xl:pb-8 2xl:mx-2`}
+          className={`font-medium md:text-sm 2xl:text-3xl px-7 lg:px-9 mb-3 2xl:pb-8 2xl:mx-2`}
         >
           {loaded ? (
             children
