@@ -10,49 +10,6 @@ import { GraphQLQuery } from '@aws-amplify/api'
 const Home: NextPage = () => {
   const [posts, setPosts] = useState<Post[]>([])
   const [loaded, setLoaded] = useState<boolean>(false)
-  const cardStates: {
-    order: Number
-    bgClass: string
-    textClass: string
-    colSpan: Number
-    rowSpan: Number
-  }[] = [
-    {
-      order: 1,
-      colSpan: 2,
-      rowSpan: 1,
-      bgClass: 'bg-indigo-600',
-      textClass: 'text-white',
-    },
-    {
-      order: 2,
-      colSpan: 1,
-      rowSpan: 1,
-      bgClass: 'bg-gray-900',
-      textClass: 'text-white',
-    },
-    {
-      order: 3,
-      colSpan: 1,
-      rowSpan: 1,
-      bgClass: 'bg-white',
-      textClass: 'text-black',
-    },
-    {
-      order: 4,
-      colSpan: 2,
-      rowSpan: 1,
-      bgClass: 'bg-purple-800',
-      textClass: 'text-white',
-    },
-    {
-      order: 2,
-      colSpan: 1,
-      rowSpan: 2,
-      bgClass: 'bg-white',
-      textClass: 'text-black',
-    },
-  ]
 
   const fetchLastSixPosts = async (): Promise<Post[]> => {
     const lastSixtPosts: GraphQLQuery<any> = await API.graphql({
@@ -90,11 +47,7 @@ const Home: NextPage = () => {
                   'https://images.pexels.com/photos/3775534/pexels-photo-3775534.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
                 }
                 date={'12 days ago'}
-                order={cardStates[index].order}
-                colSpan={cardStates[index].colSpan}
-                rowSpan={cardStates[index].rowSpan}
-                bgClass={cardStates[index].bgClass}
-                textClass={cardStates[index].textClass}
+                order={index + 1}
                 loaded
               >
                 <p>
@@ -103,7 +56,7 @@ const Home: NextPage = () => {
                 </p>
               </Card>
             ))
-          : cardStates.map((state, index) => (
+          : [1, 2, 3, 4, 5].map((index) => (
               <Card
                 key={index}
                 loaded={loaded}
@@ -111,11 +64,7 @@ const Home: NextPage = () => {
                 title="&nbsp;"
                 slug="&nbsp;"
                 imgSrc="&nbsp;"
-                order={cardStates[index].order}
-                colSpan={cardStates[index].colSpan}
-                rowSpan={cardStates[index].rowSpan}
-                bgClass={cardStates[index].bgClass}
-                textClass={cardStates[index].textClass}
+                order={index}
               ></Card>
             ))}
       </div>

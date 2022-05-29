@@ -31,7 +31,7 @@ const Navbar: FC = () => (
       </a>
     </Link>
     <div className="mt-auto mb-2 self-start">
-      <button className="bg-nature-darker font-bold py-1 px-2 rounded-r hover:bg-nature-light hover:text-nature-dark">
+      <button className="bg-nature-darker font-bold py-1 px-2 rounded-r-xl hover:bg-nature-light hover:text-nature-dark">
         EN
       </button>
     </div>
