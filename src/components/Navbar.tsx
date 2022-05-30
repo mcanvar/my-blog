@@ -29,7 +29,7 @@ const Navbar: FC = () => (
             <a className="flex py-2 w-full justify-start px-2 hover:text-nature-lighter justify-center">
                 {/* TODO: MAKE NAVBAR COLLAPSABLE */}
                 <HomeIcon />
-                <span className="ml-1 text-md hidden lg:block leading-5">Homepage</span>
+                <span className="ml-1 text-md leading-5 hidden">Homepage</span>
             </a>
         </Link>
         <div className="mt-auto mb-2 self-start">
