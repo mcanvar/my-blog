@@ -2,17 +2,21 @@ import { FC } from 'react'
 import Link from 'next/link'
 import HomeIcon from './HomeIcon'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 const Navbar: FC = () => {
   const router = useRouter()
 
   return (
     <nav className="bg-nature-dark w-1/12 text-nature-light z-20 fixed flex flex-col items-center h-screen top-0 left-0">
-      <div className="mb-6 mt-2">
-        <img
-          className="rounded-full w-8 h-8"
-          src="https://secure.gravatar.com/avatar/57c8ad1723d2b40f41babd8bc20e281b?s=192&r=g"
-          alt="pp"
+      <div className="rounded-full w-8 h-8 relative mt-4">
+        <Image
+          alt={'Mevlut'}
+          className="rounded-full"
+          layout="fill"
+          src={
+            'https://secure.gravatar.com/avatar/57c8ad1723d2b40f41babd8bc20e281b?s=192&r=g'
+          }
         />
       </div>
       <div className="mb-2 mx-2 relative">
@@ -35,7 +39,7 @@ const Navbar: FC = () => {
           <span className="ml-1 text-md leading-5 hidden">Homepage</span>
         </a>
       </Link>
-      <div className="mt-auto mb-2 self-start">
+      <div className="mt-auto mb-4 self-start">
         <a
           href={router.route.slice(0, 3) === '/en' ? '/' : '/en'}
           className="bg-nature-darker font-bold py-1 px-2 rounded-r-xl hover:bg-nature-light hover:text-nature-dark"
