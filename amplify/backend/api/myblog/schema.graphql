@@ -12,6 +12,8 @@ type Post
   slug: String!
   description: String!
   content: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
   comments: [Comment] @hasMany
 }
 
