@@ -10,6 +10,7 @@ type Post
   language: String!
   title: String!
   slug: String!
+  description: String!
   content: String!
   comments: [Comment] @hasMany
 }

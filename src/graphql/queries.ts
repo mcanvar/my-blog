@@ -9,6 +9,7 @@ export const getPost = /* GraphQL */ `
       language
       title
       slug
+      description
       content
       comments {
         items {
@@ -39,6 +40,7 @@ export const listPosts = /* GraphQL */ `
         language
         title
         slug
+        description
         content
         comments {
           nextToken
@@ -60,6 +62,7 @@ export const getComment = /* GraphQL */ `
         language
         title
         slug
+        description
         content
         comments {
           nextToken
@@ -90,6 +93,7 @@ export const listComments = /* GraphQL */ `
           language
           title
           slug
+          description
           content
           createdAt
           updatedAt

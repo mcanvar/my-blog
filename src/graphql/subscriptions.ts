@@ -9,6 +9,7 @@ export const onCreatePost = /* GraphQL */ `
       language
       title
       slug
+      description
       content
       comments {
         items {
@@ -34,6 +35,7 @@ export const onUpdatePost = /* GraphQL */ `
       language
       title
       slug
+      description
       content
       comments {
         items {
@@ -59,6 +61,7 @@ export const onDeletePost = /* GraphQL */ `
       language
       title
       slug
+      description
       content
       comments {
         items {
@@ -86,6 +89,7 @@ export const onCreateComment = /* GraphQL */ `
         language
         title
         slug
+        description
         content
         comments {
           nextToken
@@ -111,6 +115,7 @@ export const onUpdateComment = /* GraphQL */ `
         language
         title
         slug
+        description
         content
         comments {
           nextToken
@@ -136,6 +141,7 @@ export const onDeleteComment = /* GraphQL */ `
         language
         title
         slug
+        description
         content
         comments {
           nextToken
