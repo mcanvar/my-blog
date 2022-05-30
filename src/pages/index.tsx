@@ -41,7 +41,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>mcanvar&apos;s blog</title>
+        <title>{lang === 'en' ? "Mevlut's Blog" : "Mevlüt'ün Bloğu"}</title>
       </Head>
       <div className="flex flex-col h-screen justify-around gap-2 w-full">
         <h1 className="h-2/12 text-3xl font-bold mt-2 place-self-center">
