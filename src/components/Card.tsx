@@ -8,6 +8,7 @@ interface CardProps {
   title: string
   slug: string
   date: string
+  lang: string
   imgSrc: string | StaticImport
   children?: ReactElement | ReactElement[]
   order?: Number
@@ -17,6 +18,7 @@ interface CardProps {
 const Card: FC<CardProps> = ({
   title,
   slug,
+  lang,
   date,
   imgSrc,
   order = 1,
@@ -24,7 +26,7 @@ const Card: FC<CardProps> = ({
   loaded = false,
 }) => (
   <Link key={slug} href={`/${encodeURIComponent(slug)}`}>
-    <a className={`card-${order} ${!loaded && 'animate-pulse'}`}>
+    <a className={`card-${order} ${!loaded && 'animate-pulse'}`} lang={lang}>
       <div className="mx-9 my-8 2xl:mx-10">
         {loaded ? (
           <div className="w-8 md:w-9 relative lg:w-10 2xl:w-20 h-8 md:h-9 lg:h-10 2xl:h-20 rounded-full border-2 ml-1 lg:ml-3 2xl:ml-0 md:-mt-1 2xl:-mt-4">
