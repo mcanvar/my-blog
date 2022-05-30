@@ -1,21 +1,23 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { GraphQLQuery } from '@aws-amplify/api'
-import { withSSRContext } from 'aws-amplify'
+import { graphqlOperation, withSSRContext } from 'aws-amplify'
 import { listPosts } from '../graphql/queries'
 import { ListPostsQuery, Post } from '../API'
 import { ReactElement } from 'react'
-import { useRouter } from 'next/router'
 
-const PostPage: NextPage = (): ReactElement => {
-  const router = useRouter()
-  const { slug } = router.query
+interface PostPageProps {
+  post: Post
+}
 
+const PostPage: any = ({ post }: PostPageProps): ReactElement => {
   return (
     <div className="flex flex-col h-screen justify-around gap-2 w-full">
       <h1 className="h-2/12 text-3xl font-bold mt-2 place-self-center">
-        Selam 👋
+        {post.title}
       </h1>
-      <div className="h-10/12 p-4">{slug}</div>
+      <div className="h-10/12 p-4">
+        <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+      </div>
     </div>
   )
 }
@@ -43,13 +45,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
   throw new Error('Posts fetching for getStaticPaths failed!')
 }
 
-export const getStaticProps: GetStaticProps = async ({ params: slug }) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const SSR = withSSRContext()
 
-  const post: GraphQLQuery<any> = await SSR.API.graphql({
-    query: listPosts,
-    filter: { slug: { eq: slug } },
-  })
+  // eslint-disable-next-line no-unused-vars
+  const post: GraphQLQuery<any> = await SSR.API.graphql(
+    graphqlOperation(listPosts, {
+      filter: { slug: { eq: context.params?.slug } },
+      variables: { limit: 1 },
+    })
+  )
 
   if (post.data as ListPostsQuery) {
     return {
@@ -60,5 +65,7 @@ export const getStaticProps: GetStaticProps = async ({ params: slug }) => {
     }
   }
 
-  throw new Error('Post fetching for GetStaticProps failed! Slug:' + slug)
+  throw new Error(
+    'Post fetching for GetStaticProps failed! Slug:' + context.params?.slug
+  )
 }
