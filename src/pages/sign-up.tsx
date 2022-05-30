@@ -1,5 +1,5 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
+import type { NextPage } from 'next'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Auth } from 'aws-amplify'
 import { useAuth } from '../context/AuthContext'
@@ -29,6 +29,10 @@ const SignUp: NextPage = () => {
       router.push('/')
     }
   }, [router])
+
+  useEffect(() => {
+    document.documentElement.lang = 'en'
+  }, [])
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
     if (codeRequired) {

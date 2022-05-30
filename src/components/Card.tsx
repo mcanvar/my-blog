@@ -25,7 +25,14 @@ const Card: FC<CardProps> = ({
   children,
   loaded = false,
 }) => (
-  <Link key={slug} href={`/${encodeURIComponent(slug)}`}>
+  <Link
+    key={slug}
+    href={`/${
+      lang === 'tr'
+        ? encodeURIComponent(slug)
+        : 'en/' + encodeURIComponent(slug)
+    }`}
+  >
     <a className={`card-${order} ${!loaded && 'animate-pulse'}`} lang={lang}>
       <div className="mx-9 my-8 2xl:mx-10">
         {loaded ? (
