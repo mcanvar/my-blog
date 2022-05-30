@@ -11,6 +11,8 @@ export const onCreatePost = /* GraphQL */ `
       slug
       description
       content
+      createdAt
+      updatedAt
       comments {
         items {
           id
@@ -22,8 +24,6 @@ export const onCreatePost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -37,6 +37,8 @@ export const onUpdatePost = /* GraphQL */ `
       slug
       description
       content
+      createdAt
+      updatedAt
       comments {
         items {
           id
@@ -48,8 +50,6 @@ export const onUpdatePost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -63,6 +63,8 @@ export const onDeletePost = /* GraphQL */ `
       slug
       description
       content
+      createdAt
+      updatedAt
       comments {
         items {
           id
@@ -74,8 +76,6 @@ export const onDeletePost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -91,11 +91,11 @@ export const onCreateComment = /* GraphQL */ `
         slug
         description
         content
+        createdAt
+        updatedAt
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -117,11 +117,11 @@ export const onUpdateComment = /* GraphQL */ `
         slug
         description
         content
+        createdAt
+        updatedAt
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -143,11 +143,11 @@ export const onDeleteComment = /* GraphQL */ `
         slug
         description
         content
+        createdAt
+        updatedAt
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content

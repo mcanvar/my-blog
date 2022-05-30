@@ -9,6 +9,8 @@ export type CreatePostInput = {
   slug: string,
   description: string,
   content: string,
+  createdAt?: string | null,
+  updatedAt?: string | null,
 };
 
 export type ModelPostConditionInput = {
@@ -17,6 +19,8 @@ export type ModelPostConditionInput = {
   slug?: ModelStringInput | null,
   description?: ModelStringInput | null,
   content?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
@@ -70,9 +74,9 @@ export type Post = {
   slug: string,
   description: string,
   content: string,
-  comments?: ModelCommentConnection | null,
   createdAt: string,
   updatedAt: string,
+  comments?: ModelCommentConnection | null,
   owner?: string | null,
 };
 
@@ -100,6 +104,8 @@ export type UpdatePostInput = {
   slug?: string | null,
   description?: string | null,
   content?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
 };
 
 export type DeletePostInput = {
@@ -153,6 +159,8 @@ export type ModelPostFilterInput = {
   slug?: ModelStringInput | null,
   description?: ModelStringInput | null,
   content?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
@@ -187,6 +195,8 @@ export type CreatePostMutation = {
     slug: string,
     description: string,
     content: string,
+    createdAt: string,
+    updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -200,8 +210,6 @@ export type CreatePostMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
     owner?: string | null,
   } | null,
 };
@@ -220,6 +228,8 @@ export type UpdatePostMutation = {
     slug: string,
     description: string,
     content: string,
+    createdAt: string,
+    updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -233,8 +243,6 @@ export type UpdatePostMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
     owner?: string | null,
   } | null,
 };
@@ -253,6 +261,8 @@ export type DeletePostMutation = {
     slug: string,
     description: string,
     content: string,
+    createdAt: string,
+    updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -266,8 +276,6 @@ export type DeletePostMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
     owner?: string | null,
   } | null,
 };
@@ -289,12 +297,12 @@ export type CreateCommentMutation = {
       slug: string,
       description: string,
       content: string,
+      createdAt: string,
+      updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
       owner?: string | null,
     } | null,
     content: string,
@@ -322,12 +330,12 @@ export type UpdateCommentMutation = {
       slug: string,
       description: string,
       content: string,
+      createdAt: string,
+      updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
       owner?: string | null,
     } | null,
     content: string,
@@ -355,12 +363,12 @@ export type DeleteCommentMutation = {
       slug: string,
       description: string,
       content: string,
+      createdAt: string,
+      updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
       owner?: string | null,
     } | null,
     content: string,
@@ -384,6 +392,8 @@ export type GetPostQuery = {
     slug: string,
     description: string,
     content: string,
+    createdAt: string,
+    updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -397,8 +407,6 @@ export type GetPostQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
     owner?: string | null,
   } | null,
 };
@@ -420,12 +428,12 @@ export type ListPostsQuery = {
       slug: string,
       description: string,
       content: string,
+      createdAt: string,
+      updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -448,12 +456,12 @@ export type GetCommentQuery = {
       slug: string,
       description: string,
       content: string,
+      createdAt: string,
+      updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
       owner?: string | null,
     } | null,
     content: string,
@@ -511,6 +519,8 @@ export type OnCreatePostSubscription = {
     slug: string,
     description: string,
     content: string,
+    createdAt: string,
+    updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -524,8 +534,6 @@ export type OnCreatePostSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
     owner?: string | null,
   } | null,
 };
@@ -543,6 +551,8 @@ export type OnUpdatePostSubscription = {
     slug: string,
     description: string,
     content: string,
+    createdAt: string,
+    updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -556,8 +566,6 @@ export type OnUpdatePostSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
     owner?: string | null,
   } | null,
 };
@@ -575,6 +583,8 @@ export type OnDeletePostSubscription = {
     slug: string,
     description: string,
     content: string,
+    createdAt: string,
+    updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -588,8 +598,6 @@ export type OnDeletePostSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
     owner?: string | null,
   } | null,
 };
@@ -610,12 +618,12 @@ export type OnCreateCommentSubscription = {
       slug: string,
       description: string,
       content: string,
+      createdAt: string,
+      updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
       owner?: string | null,
     } | null,
     content: string,
@@ -642,12 +650,12 @@ export type OnUpdateCommentSubscription = {
       slug: string,
       description: string,
       content: string,
+      createdAt: string,
+      updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
       owner?: string | null,
     } | null,
     content: string,
@@ -674,12 +682,12 @@ export type OnDeleteCommentSubscription = {
       slug: string,
       description: string,
       content: string,
+      createdAt: string,
+      updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
       owner?: string | null,
     } | null,
     content: string,

@@ -11,6 +11,8 @@ export const getPost = /* GraphQL */ `
       slug
       description
       content
+      createdAt
+      updatedAt
       comments {
         items {
           id
@@ -22,8 +24,6 @@ export const getPost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -42,11 +42,11 @@ export const listPosts = /* GraphQL */ `
         slug
         description
         content
+        createdAt
+        updatedAt
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       nextToken
@@ -64,11 +64,11 @@ export const getComment = /* GraphQL */ `
         slug
         description
         content
+        createdAt
+        updatedAt
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
