@@ -59,10 +59,7 @@ const Home: NextPage = () => {
                   order={index + 1}
                   loaded
                 >
-                  <p>
-                    “ summary will be here summary will be here summary will be
-                    here summary will be here summary will be here ”
-                  </p>
+                  <p>“ {post.description} ”</p>
                 </Card>
               ))
             : [1, 2, 3, 4, 5].map((index) => (
