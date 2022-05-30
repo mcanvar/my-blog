@@ -11,11 +11,11 @@ interface PostPageProps {
 
 const PostPage: any = ({ post }: PostPageProps): ReactElement => {
   return (
-    <div className="flex flex-col h-screen justify-around gap-2 w-full">
+    <div className="flex flex-col justify-around gap-2 w-full">
       <h1 className="h-2/12 text-3xl font-bold mt-2 place-self-center">
         {post.title}
       </h1>
-      <div className="h-10/12 p-4">
+      <div className="h-auto p-4">
         <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
       </div>
     </div>
