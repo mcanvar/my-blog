@@ -1,15 +1,12 @@
 import { FC, ReactElement } from 'react'
-import Image from 'next/image'
-import { StaticImageData } from 'next/dist/client/image'
 import Link from 'next/link'
+import InfoIcon from './InfoIcon'
 
-declare type StaticImport = string | StaticImageData
 interface CardProps {
   title: string
   slug: string
   date: string
   lang: string
-  imgSrc: string | StaticImport
   children?: ReactElement | ReactElement[]
   order?: Number
   loaded?: boolean
@@ -20,7 +17,6 @@ const Card: FC<CardProps> = ({
   slug,
   lang,
   date,
-  imgSrc,
   order = 1,
   children,
   loaded = false,
@@ -36,34 +32,29 @@ const Card: FC<CardProps> = ({
     <a className={`card-${order} ${!loaded && 'animate-pulse'}`} lang={lang}>
       <div className="mx-9 my-8 2xl:mx-10">
         {loaded ? (
-          <div className="w-8 md:w-9 relative lg:w-10 2xl:w-20 h-8 md:h-9 lg:h-10 2xl:h-20 rounded-full border-2 ml-1 lg:ml-3 2xl:ml-0 md:-mt-1 2xl:-mt-4">
-            <Image
-              alt={title}
-              className="rounded-full"
-              layout="fill"
-              src={imgSrc}
-            />
+          <div className="relative w-8 md:w-9 lg:w-10 2xl:w-20 h-8 md:h-9 lg:h-10 2xl:h-20">
+            <InfoIcon />
           </div>
         ) : (
           <div className="w-8 md:w-9 lg:w-10 2xl:w-20 h-8 md:h-9 lg:h-10 2xl:h-20 bg-gray-200 bg-opacity-50 rounded-full"></div>
         )}
 
-        <h4 className="text-xs md:text-base 2xl:text-2xl pl-12 lg:pl-16 2xl:pl-20 -mt-8 md:-mt-10 lg:-mt-11 2xl:-mt-20 2xl:mx-8">
-          {loaded ? (
-            '5 min read'
-          ) : (
-            <div className="bg-gray-200 bg-opacity-50 rounded-full">&nbsp;</div>
-          )}
-        </h4>
-        <h4
-          className={`text-xs md:text-base ${
-            !loaded && 'pt-1'
-          } 2xl:text-2xl pl-12 lg:pl-16 2xl:pl-20 2xl:my-2 2xl:mx-8`}
-        >
+        <h4 className="text-xs 2xl:text-2xl pl-9 lg:pl-12 2xl:pl-16 -mt-7 md:-mt-8 lg:-mt-9 2xl:-mt-12 2xl:mx-8">
           {loaded ? (
             date
           ) : (
             <div className="bg-gray-200 bg-opacity-50 rounded-full">{date}</div>
+          )}
+        </h4>
+        <h4
+          className={`text-xs ${
+            !loaded && 'pt-1'
+          } 2xl:text-2xl pl-9 lg:pl-12 2xl:pl-16 2xl:my-2 2xl:mx-8`}
+        >
+          {loaded ? (
+            '5 min read'
+          ) : (
+            <div className="bg-gray-200 bg-opacity-50 rounded-full">&nbsp;</div>
           )}
         </h4>
       </div>

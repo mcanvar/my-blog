@@ -43,7 +43,7 @@ const Home: NextPage = () => {
       <Head>
         <title>{lang === 'en' ? "Mevlut's Blog" : "Mevlüt'ün Bloğu"}</title>
       </Head>
-      <div className="flex flex-col h-screen justify-around gap-2 w-full">
+      <div className="flex flex-col h-auto min-h-screen justify-around gap-2 w-full">
         <h1 className="h-2/12 text-3xl font-bold mt-2 place-self-center">
           Selam 👋
         </h1>
@@ -55,9 +55,6 @@ const Home: NextPage = () => {
                   title={post.title}
                   lang={post.language}
                   slug={post.slug}
-                  imgSrc={
-                    'https://images.pexels.com/photos/3775534/pexels-photo-3775534.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                  }
                   date={'12 days ago'}
                   order={index + 1}
                   loaded
@@ -76,7 +73,6 @@ const Home: NextPage = () => {
                   title="&nbsp;"
                   lang="tr"
                   slug="&nbsp;"
-                  imgSrc="&nbsp;"
                   order={index}
                 ></Card>
               ))}

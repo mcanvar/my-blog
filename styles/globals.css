@@ -31,19 +31,19 @@ main {
         @apply grid grid-cols-1 grid-rows-5 md:grid-cols-2 md:grid-rows-4 lg:grid-cols-4 lg:grid-rows-2 gap-4 p-4;
     }
     .card-1 {
-        @apply min-h-[275px] col-span-1 md:col-span-2 row-span-1 bg-nature-light rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
+        @apply min-h-[275px] md:order-1 lg:order-1 col-span-1 md:col-span-2 row-span-1 bg-nature-light rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
     }
     .card-2 {
-        @apply min-h-[275px] col-span-1 row-span-1 bg-nature-darker !text-white rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
+        @apply min-h-[275px] md:order-3 lg:order-2 col-span-1 row-span-1 bg-nature-darker !text-white rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
     }
     .card-3 {
-        @apply min-h-[275px] col-span-1 row-span-1 md:row-span-2 bg-white rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
+        @apply min-h-[275px] md:order-2 lg:order-3  col-span-1 row-span-1 md:row-span-2 bg-white rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
     }
     .card-4 {
-        @apply min-h-[275px] col-span-1 row-span-1 bg-nature-lighter rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
+        @apply min-h-[275px] md:order-4 lg:order-4 col-span-1 row-span-1 bg-nature-lighter rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
     }
     .card-5 {
-        @apply min-h-[275px] col-span-1 md:col-span-2 row-span-1 bg-nature-dark !text-white rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
+        @apply min-h-[275px] md:order-5 lg:order-5 md:col-span-3 lg:col-span-2 row-span-1 bg-nature-dark !text-white rounded-xl !shadow-lg hover:!shadow-xl hover:!scale-[1.001] shadow-nature-darker bg-opacity-75;
     }
 
 }
