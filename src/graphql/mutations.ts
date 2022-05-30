@@ -12,6 +12,7 @@ export const createPost = /* GraphQL */ `
       language
       title
       slug
+      description
       content
       comments {
         items {
@@ -40,6 +41,7 @@ export const updatePost = /* GraphQL */ `
       language
       title
       slug
+      description
       content
       comments {
         items {
@@ -68,6 +70,7 @@ export const deletePost = /* GraphQL */ `
       language
       title
       slug
+      description
       content
       comments {
         items {
@@ -98,6 +101,7 @@ export const createComment = /* GraphQL */ `
         language
         title
         slug
+        description
         content
         comments {
           nextToken
@@ -126,6 +130,7 @@ export const updateComment = /* GraphQL */ `
         language
         title
         slug
+        description
         content
         comments {
           nextToken
@@ -154,6 +159,7 @@ export const deleteComment = /* GraphQL */ `
         language
         title
         slug
+        description
         content
         comments {
           nextToken

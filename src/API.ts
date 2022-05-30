@@ -7,6 +7,7 @@ export type CreatePostInput = {
   language: string,
   title: string,
   slug: string,
+  description: string,
   content: string,
 };
 
@@ -14,6 +15,7 @@ export type ModelPostConditionInput = {
   language?: ModelStringInput | null,
   title?: ModelStringInput | null,
   slug?: ModelStringInput | null,
+  description?: ModelStringInput | null,
   content?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
@@ -66,6 +68,7 @@ export type Post = {
   language: string,
   title: string,
   slug: string,
+  description: string,
   content: string,
   comments?: ModelCommentConnection | null,
   createdAt: string,
@@ -95,6 +98,7 @@ export type UpdatePostInput = {
   language?: string | null,
   title?: string | null,
   slug?: string | null,
+  description?: string | null,
   content?: string | null,
 };
 
@@ -147,6 +151,7 @@ export type ModelPostFilterInput = {
   language?: ModelStringInput | null,
   title?: ModelStringInput | null,
   slug?: ModelStringInput | null,
+  description?: ModelStringInput | null,
   content?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
@@ -180,6 +185,7 @@ export type CreatePostMutation = {
     language: string,
     title: string,
     slug: string,
+    description: string,
     content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -212,6 +218,7 @@ export type UpdatePostMutation = {
     language: string,
     title: string,
     slug: string,
+    description: string,
     content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -244,6 +251,7 @@ export type DeletePostMutation = {
     language: string,
     title: string,
     slug: string,
+    description: string,
     content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -279,6 +287,7 @@ export type CreateCommentMutation = {
       language: string,
       title: string,
       slug: string,
+      description: string,
       content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -311,6 +320,7 @@ export type UpdateCommentMutation = {
       language: string,
       title: string,
       slug: string,
+      description: string,
       content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -343,6 +353,7 @@ export type DeleteCommentMutation = {
       language: string,
       title: string,
       slug: string,
+      description: string,
       content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -371,6 +382,7 @@ export type GetPostQuery = {
     language: string,
     title: string,
     slug: string,
+    description: string,
     content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -406,6 +418,7 @@ export type ListPostsQuery = {
       language: string,
       title: string,
       slug: string,
+      description: string,
       content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -433,6 +446,7 @@ export type GetCommentQuery = {
       language: string,
       title: string,
       slug: string,
+      description: string,
       content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -468,6 +482,7 @@ export type ListCommentsQuery = {
         language: string,
         title: string,
         slug: string,
+        description: string,
         content: string,
         createdAt: string,
         updatedAt: string,
@@ -494,6 +509,7 @@ export type OnCreatePostSubscription = {
     language: string,
     title: string,
     slug: string,
+    description: string,
     content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -525,6 +541,7 @@ export type OnUpdatePostSubscription = {
     language: string,
     title: string,
     slug: string,
+    description: string,
     content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -556,6 +573,7 @@ export type OnDeletePostSubscription = {
     language: string,
     title: string,
     slug: string,
+    description: string,
     content: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -590,6 +608,7 @@ export type OnCreateCommentSubscription = {
       language: string,
       title: string,
       slug: string,
+      description: string,
       content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -621,6 +640,7 @@ export type OnUpdateCommentSubscription = {
       language: string,
       title: string,
       slug: string,
+      description: string,
       content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -652,6 +672,7 @@ export type OnDeleteCommentSubscription = {
       language: string,
       title: string,
       slug: string,
+      description: string,
       content: string,
       comments?:  {
         __typename: "ModelCommentConnection",
