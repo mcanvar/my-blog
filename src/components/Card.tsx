@@ -63,7 +63,7 @@ const Card: FC<CardProps> = ({
     >
       <a
         ref={cardRef}
-        className={`card-${order} ${!loaded && 'animate-pulse'}`}
+        className={!loaded ? `card-${order} animate-pulse'` : `card-${order}`}
         lang={lang}
       >
         <div className="mx-9 my-8 2xl:mx-10">
