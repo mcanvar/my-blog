@@ -7,12 +7,13 @@ type Post
   {allow: public, operations: [read] }
 ]) {
   id: ID!
-  language: String!
+  language: String! @index(name: "postsByDate", queryField: "postsByDate", sortKeyFields: ["createdAt"])
   title: String!
   slug: String!
   description: String!
   content: String!
   createdAt: AWSDateTime!
+  type: String!
   updatedAt: AWSDateTime!
   comments: [Comment] @hasMany
 }

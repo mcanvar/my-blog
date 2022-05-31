@@ -10,6 +10,7 @@ export type CreatePostInput = {
   description: string,
   content: string,
   createdAt?: string | null,
+  type: string,
   updatedAt?: string | null,
 };
 
@@ -20,6 +21,7 @@ export type ModelPostConditionInput = {
   description?: ModelStringInput | null,
   content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  type?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
@@ -75,6 +77,7 @@ export type Post = {
   description: string,
   content: string,
   createdAt: string,
+  type: string,
   updatedAt: string,
   comments?: ModelCommentConnection | null,
   owner?: string | null,
@@ -105,6 +108,7 @@ export type UpdatePostInput = {
   description?: string | null,
   content?: string | null,
   createdAt?: string | null,
+  type?: string | null,
   updatedAt?: string | null,
 };
 
@@ -160,6 +164,7 @@ export type ModelPostFilterInput = {
   description?: ModelStringInput | null,
   content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  type?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
@@ -171,6 +176,22 @@ export type ModelPostConnection = {
   items:  Array<Post | null >,
   nextToken?: string | null,
 };
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
@@ -196,6 +217,7 @@ export type CreatePostMutation = {
     description: string,
     content: string,
     createdAt: string,
+    type: string,
     updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -229,6 +251,7 @@ export type UpdatePostMutation = {
     description: string,
     content: string,
     createdAt: string,
+    type: string,
     updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -262,6 +285,7 @@ export type DeletePostMutation = {
     description: string,
     content: string,
     createdAt: string,
+    type: string,
     updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -298,6 +322,7 @@ export type CreateCommentMutation = {
       description: string,
       content: string,
       createdAt: string,
+      type: string,
       updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -331,6 +356,7 @@ export type UpdateCommentMutation = {
       description: string,
       content: string,
       createdAt: string,
+      type: string,
       updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -364,6 +390,7 @@ export type DeleteCommentMutation = {
       description: string,
       content: string,
       createdAt: string,
+      type: string,
       updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -393,6 +420,7 @@ export type GetPostQuery = {
     description: string,
     content: string,
     createdAt: string,
+    type: string,
     updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -429,6 +457,40 @@ export type ListPostsQuery = {
       description: string,
       content: string,
       createdAt: string,
+      type: string,
+      updatedAt: string,
+      comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+      } | null,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type PostsByDateQueryVariables = {
+  language: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PostsByDateQuery = {
+  postsByDate?:  {
+    __typename: "ModelPostConnection",
+    items:  Array< {
+      __typename: "Post",
+      id: string,
+      language: string,
+      title: string,
+      slug: string,
+      description: string,
+      content: string,
+      createdAt: string,
+      type: string,
       updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -457,6 +519,7 @@ export type GetCommentQuery = {
       description: string,
       content: string,
       createdAt: string,
+      type: string,
       updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -493,6 +556,7 @@ export type ListCommentsQuery = {
         description: string,
         content: string,
         createdAt: string,
+        type: string,
         updatedAt: string,
         owner?: string | null,
       } | null,
@@ -520,6 +584,7 @@ export type OnCreatePostSubscription = {
     description: string,
     content: string,
     createdAt: string,
+    type: string,
     updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -552,6 +617,7 @@ export type OnUpdatePostSubscription = {
     description: string,
     content: string,
     createdAt: string,
+    type: string,
     updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -584,6 +650,7 @@ export type OnDeletePostSubscription = {
     description: string,
     content: string,
     createdAt: string,
+    type: string,
     updatedAt: string,
     comments?:  {
       __typename: "ModelCommentConnection",
@@ -619,6 +686,7 @@ export type OnCreateCommentSubscription = {
       description: string,
       content: string,
       createdAt: string,
+      type: string,
       updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -651,6 +719,7 @@ export type OnUpdateCommentSubscription = {
       description: string,
       content: string,
       createdAt: string,
+      type: string,
       updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
@@ -683,6 +752,7 @@ export type OnDeleteCommentSubscription = {
       description: string,
       content: string,
       createdAt: string,
+      type: string,
       updatedAt: string,
       comments?:  {
         __typename: "ModelCommentConnection",
