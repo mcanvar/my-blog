@@ -2,9 +2,14 @@ import Head from 'next/head'
 import { NextPage } from 'next'
 import Card from '../components/Card'
 import { useEffect, useState } from 'react'
-import { ListPostsQuery, Post } from '../API'
+import {
+  ModelSortDirection,
+  Post,
+  PostsByDateQuery,
+  PostsByDateQueryVariables,
+} from '../API'
 import { API, graphqlOperation } from 'aws-amplify'
-import { listPosts } from '../graphql/queries'
+import { postsByDate } from '../graphql/overrides/queries'
 import { GraphQLQuery } from '@aws-amplify/api'
 import { useRouter } from 'next/router'
 
@@ -17,16 +22,20 @@ const Home: NextPage = () => {
   useEffect(() => {
     document.documentElement.lang = lang
 
-    const fetchLastSixPosts = async (): Promise<void> => {
-      const lastSixtPosts: GraphQLQuery<any> = await API.graphql(
-        graphqlOperation(listPosts, {
-          filter: { language: { eq: lang } },
-          limit: 6,
-        })
-      )
+    const fetchLastSixPosts: GraphQLQuery<any> = async (): Promise<void> => {
+      const postsByDateInput: PostsByDateQueryVariables = {
+        language: lang,
+        sortDirection: ModelSortDirection.DESC,
+        limit: 5,
+      }
 
-      if (lastSixtPosts.data as ListPostsQuery) {
-        setPosts(lastSixtPosts.data.listPosts?.items)
+      const lastSixPosts = (await API.graphql(
+        graphqlOperation(postsByDate, postsByDateInput)
+      )) as { data: PostsByDateQuery }
+      console.log(lastSixPosts)
+
+      if (lastSixPosts.data) {
+        setPosts(lastSixPosts.data.postsByDate?.items as Post[])
         setLoaded(true)
 
         return
