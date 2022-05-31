@@ -13,7 +13,6 @@ type Post
   description: String!
   content: String!
   createdAt: AWSDateTime!
-  type: String!
   updatedAt: AWSDateTime!
   comments: [Comment] @hasMany
 }

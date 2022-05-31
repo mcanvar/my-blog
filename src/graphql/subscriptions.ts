@@ -12,7 +12,6 @@ export const onCreatePost = /* GraphQL */ `
       description
       content
       createdAt
-      type
       updatedAt
       comments {
         items {
@@ -39,7 +38,6 @@ export const onUpdatePost = /* GraphQL */ `
       description
       content
       createdAt
-      type
       updatedAt
       comments {
         items {
@@ -66,7 +64,6 @@ export const onDeletePost = /* GraphQL */ `
       description
       content
       createdAt
-      type
       updatedAt
       comments {
         items {
@@ -95,7 +92,6 @@ export const onCreateComment = /* GraphQL */ `
         description
         content
         createdAt
-        type
         updatedAt
         comments {
           nextToken
@@ -122,7 +118,6 @@ export const onUpdateComment = /* GraphQL */ `
         description
         content
         createdAt
-        type
         updatedAt
         comments {
           nextToken
@@ -149,7 +144,6 @@ export const onDeleteComment = /* GraphQL */ `
         description
         content
         createdAt
-        type
         updatedAt
         comments {
           nextToken

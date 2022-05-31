@@ -12,7 +12,6 @@ export const getPost = /* GraphQL */ `
       description
       content
       createdAt
-      type
       updatedAt
       comments {
         items {
@@ -44,7 +43,6 @@ export const listPosts = /* GraphQL */ `
         description
         content
         createdAt
-        type
         updatedAt
         comments {
           nextToken
@@ -80,7 +78,6 @@ export const postsByDate = /* GraphQL */ `
         description
         content
         createdAt
-        type
         updatedAt
         comments {
           nextToken
@@ -103,7 +100,6 @@ export const getComment = /* GraphQL */ `
         description
         content
         createdAt
-        type
         updatedAt
         comments {
           nextToken
@@ -135,7 +131,6 @@ export const listComments = /* GraphQL */ `
           description
           content
           createdAt
-          type
           updatedAt
           owner
         }
