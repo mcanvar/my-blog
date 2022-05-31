@@ -12,6 +12,7 @@ export const getPost = /* GraphQL */ `
       description
       content
       createdAt
+      type
       updatedAt
       comments {
         items {
@@ -43,6 +44,43 @@ export const listPosts = /* GraphQL */ `
         description
         content
         createdAt
+        type
+        updatedAt
+        comments {
+          nextToken
+        }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByDate = /* GraphQL */ `
+  query PostsByDate(
+    $language: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDate(
+      language: $language
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        language
+        title
+        slug
+        description
+        content
+        createdAt
+        type
         updatedAt
         comments {
           nextToken
@@ -65,6 +103,7 @@ export const getComment = /* GraphQL */ `
         description
         content
         createdAt
+        type
         updatedAt
         comments {
           nextToken
@@ -96,6 +135,7 @@ export const listComments = /* GraphQL */ `
           description
           content
           createdAt
+          type
           updatedAt
           owner
         }

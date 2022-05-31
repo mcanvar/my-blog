@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 
 // https://docs.amplify.aws/cli-legacy/graphql-transformer/directives/
 // https://gist.github.com/pikanji/dcb6749293ddb4c68332c56ee910d1ba
@@ -145,6 +145,11 @@ const clientSchemaExtensions = gql`
   directive @hasMany on FIELD_DEFINITION
   directive @belongsTo on FIELD_DEFINITION
   directive @manyToMany(relationName: String) on FIELD_DEFINITION
+  directive @index(
+    name: String
+    queryField: String
+    sortKeyFields: String
+  ) on FIELD_DEFINITION
 
   scalar AWSDateTime
-`;
+`
