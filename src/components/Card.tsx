@@ -50,7 +50,7 @@ const Card: FC<CardProps> = ({
     }
 
     setCardTextHeight(calculateDescHeight())
-  })
+  }, [])
 
   return (
     <Link
