@@ -60,28 +60,12 @@ const Home: NextPage = () => {
         <div className="h-10/12 grid grid-flow-row grid-cols-1 md:grid-cols-3 lg:grid-cols-4 lg:grid-rows-2 gap-4 p-4">
           {posts && loaded
             ? posts.map((post, index) => (
-                <Card
-                  key={index}
-                  title={post.title}
-                  lang={post.language}
-                  slug={post.slug}
-                  date={isoStringToRelativeTime(post.createdAt)}
-                  order={index + 1}
-                  loaded
-                >
+                <Card key={index} post={post} order={index + 1}>
                   <p>“ {post.description} ”</p>
                 </Card>
               ))
             : [1, 2, 3, 4, 5].map((index) => (
-                <Card
-                  key={index}
-                  loaded={loaded}
-                  date="&nbsp;"
-                  title="&nbsp;"
-                  lang="tr"
-                  slug="&nbsp;"
-                  order={index}
-                ></Card>
+                <Card key={index} post={null} order={index + 1}></Card>
               ))}
         </div>
       </div>
