@@ -11,12 +11,14 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^1.2.26",
     "aws-amplify": "^4.3.24",
+    "luxon": "^2.4.0",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-hook-form": "^7.31.2"
   },
   "devDependencies": {
+    "@types/luxon": "^2.3.2",
     "@types/node": "17.0.34",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.4",

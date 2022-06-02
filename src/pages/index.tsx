@@ -12,6 +12,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { postsByDate } from '../graphql/overrides/queries'
 import { GraphQLQuery } from '@aws-amplify/api'
 import { useRouter } from 'next/router'
+import { isoStringToRelativeTime } from '../utils/DateFunctions'
 
 const Home: NextPage = () => {
   const [posts, setPosts] = useState<Post[]>([])
@@ -64,7 +65,7 @@ const Home: NextPage = () => {
                   title={post.title}
                   lang={post.language}
                   slug={post.slug}
-                  date={'12 days ago'}
+                  date={isoStringToRelativeTime(post.createdAt)}
                   order={index + 1}
                   loaded
                 >
