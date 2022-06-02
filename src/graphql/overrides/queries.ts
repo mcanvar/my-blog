@@ -17,6 +17,7 @@ export const postsByDate = /* GraphQL */ `
         language
         title
         slug
+        content
         description
         createdAt
       }
