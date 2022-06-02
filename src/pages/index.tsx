@@ -12,7 +12,6 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { postsByDate } from '../graphql/overrides/queries'
 import { GraphQLQuery } from '@aws-amplify/api'
 import { useRouter } from 'next/router'
-import { isoStringToRelativeTime } from '../utils/DateFunctions'
 
 const Home: NextPage = () => {
   const [posts, setPosts] = useState<Post[]>([])
@@ -64,8 +63,8 @@ const Home: NextPage = () => {
                   <p>“ {post.description} ”</p>
                 </Card>
               ))
-            : [1, 2, 3, 4, 5].map((index) => (
-                <Card key={index} post={null} order={index + 1}></Card>
+            : [1, 2, 3, 4, 5].map((value) => (
+                <Card key={value} post={null} order={value}></Card>
               ))}
         </div>
       </div>
