@@ -107,7 +107,7 @@ const Card: FC<CardProps> = ({ post = null, order = 1, children }) => {
           </a>
         </Link>
       ) : (
-        <div ref={cardRef} className={`card-${order} animate-pulse'`}>
+        <div ref={cardRef} className={`card-${order} animate-pulse`}>
           <div className="mx-9 my-8 2xl:mx-10">
             <div className="w-8 md:w-9 lg:w-10 2xl:w-20 h-8 md:h-9 lg:h-10 2xl:h-20 bg-gray-200 bg-opacity-50 rounded-full"></div>
 
