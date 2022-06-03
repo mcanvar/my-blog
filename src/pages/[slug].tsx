@@ -21,12 +21,15 @@ const PostPage: any = ({ post }: PostPageProps): ReactElement => {
       <Head>
         <title>{post.title}</title>
       </Head>
-      <div className="flex flex-col justify-around gap-2 p-4">
-        <h1 className="h-2/12 text-3xl font-bold mt-2 justify-self-start">
-          {post.title}
-        </h1>
-        <div className="h-auto p-4 mt-4 bg-nature-lighter rounded-xl shadow-lg">
-          <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+      <div className="post">
+        <h1 className="post-title">{post.title}</h1>
+        <div className="post-card">
+          <div
+            className="post-content"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          ></div>
+          {/* TODO: Buttons */}
+          <div hidden className="post-controls"></div>
         </div>
       </div>
     </>

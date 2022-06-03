@@ -76,4 +76,24 @@ main {
     .card-5 .card-content {
         @apply text-white text-opacity-50;
     }
+
+    .post {
+        @apply flex flex-col justify-around p-4;
+    }
+
+    .post-title {
+        @apply !text-3xl font-bold mt-2 justify-self-start;
+    }
+
+    .post-card {
+        @apply h-auto bg-nature-lighter rounded-xl shadow-lg mt-2;
+    }
+
+    .post-content {
+        @apply px-4 pt-4 pb-16;
+    }
+
+    .post-controls {
+        @apply h-16 w-full bg-nature-dark rounded-bl-lg rounded-br-lg;
+    }
 }
