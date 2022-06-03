@@ -1,17 +1,15 @@
 import { FC, ReactElement } from 'react'
+import Icon from './Icon'
 
 const InfoIcon: FC = (): ReactElement => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-  >
+  <Icon>
     <path
-      fillRule="evenodd"
-      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-      clipRule="evenodd"
-    />
-  </svg>
+      strokeLinecap="round"
+      d="M32.13 17v-.67M32.13 44.76V24.33h-4.27"
+    ></path>
+    <circle cx="32.06" cy="31.46" r="24.25" strokeLinecap="round"></circle>
+    <path strokeLinecap="round" d="M24.02 45.22h16.21"></path>
+  </Icon>
 )
 
 export default InfoIcon

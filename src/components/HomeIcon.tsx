@@ -1,14 +1,15 @@
 import { FC, ReactElement } from 'react'
+import { useRouter } from 'next/router'
+import Icon from './Icon'
 
-const HomeIcon: FC = (): ReactElement => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-8 w-8"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-  >
-    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-  </svg>
-)
+const HomeIcon: FC = (): ReactElement => {
+  const router = useRouter()
+
+  return (
+    <Icon filled={router.pathname === '/'}>
+      <path d="M51.61 25.21L33.2 11.4a2 2 0 00-2.4 0L12.39 25.21a2 2 0 00-.8 1.6v26.64a2 2 0 002 2H25a2 2 0 002-2V45a2 2 0 012-2h7a2 2 0 012 2v8.45a2 2 0 002 2h10.41a2 2 0 002-2V26.81a2 2 0 00-.8-1.6z"></path>
+    </Icon>
+  )
+}
 
 export default HomeIcon
