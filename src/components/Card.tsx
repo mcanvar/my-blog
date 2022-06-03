@@ -79,26 +79,22 @@ const Card: FC<CardProps> = ({ post = null, order = 1, children }) => {
           }`}
         >
           <a ref={cardRef} className={`card-${order}`} lang={post.language}>
-            <div className="mx-9 my-8 2xl:mx-10">
-              <div className="relative w-8 md:w-9 lg:w-10 2xl:w-20 h-8 md:h-9 lg:h-10 2xl:h-20">
+            <div className="card-info">
+              <div className="card-info-icon">
                 <InfoIcon />
               </div>
-              <h4 className="text-xs 2xl:text-2xl pl-9 lg:pl-12 2xl:pl-16 -mt-7 md:-mt-8 lg:-mt-9 2xl:-mt-12 2xl:mx-8">
-                {humanReadableDate}
-              </h4>
-              <h4
-                className={`text-xs 2xl:text-2xl pl-9 lg:pl-12 2xl:pl-16 2xl:my-2 2xl:mx-8`}
-              >
-                {readTimeInMinutes}
-              </h4>
+              <div className="card-info-data">
+                <h4>{humanReadableDate}</h4>
+                <h4>{readTimeInMinutes}</h4>
+              </div>
             </div>
-            <div className="-mt-6">
+            <div className="-mt-4">
               <h2 className="text-xl 2xl:text-4xl font-bold px-7 lg:px-9 2xl:pt-6 2xl:mx-2">
                 {[post.title]}
               </h2>
               <br />
               <div
-                className={`font-medium !sm:h-64 md:text-sm 2xl:text-3xl px-7 lg:px-9 mb-3 2xl:pb-8 2xl:mx-2 overflow-y-auto`}
+                className={`card-content`}
                 style={{ maxHeight: cardTextHeight }}
               >
                 {children}
