@@ -32,7 +32,6 @@ const Home: NextPage = () => {
       const lastSixPosts = (await API.graphql(
         graphqlOperation(postsByDate, postsByDateInput)
       )) as { data: PostsByDateQuery }
-      console.log(lastSixPosts)
 
       if (lastSixPosts.data) {
         setPosts(lastSixPosts.data.postsByDate?.items as Post[])

@@ -1,14 +1,17 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { graphqlOperation, withSSRContext } from 'aws-amplify'
 import { GraphQLQuery } from '@aws-amplify/api'
-import { listPosts } from '../graphql/queries'
 import { ListPostsQuery, Post } from '../API'
+import {
+  listPostsForISR,
+  listPostSlugsForISR,
+} from '../graphql/overrides/queries'
 
 export const getStaticPathsFunction: GetStaticPaths = async () => {
   const SSR = withSSRContext()
 
   const posts: GraphQLQuery<any> = await SSR.API.graphql({
-    query: listPosts,
+    query: listPostSlugsForISR,
   })
 
   if (posts.data as ListPostsQuery) {
@@ -30,7 +33,7 @@ export const getStaticPropsFunction: GetStaticProps = async (context) => {
 
   // eslint-disable-next-line no-unused-vars
   const post: GraphQLQuery<any> = await SSR.API.graphql(
-    graphqlOperation(listPosts, {
+    graphqlOperation(listPostsForISR, {
       filter: { slug: { eq: context.params?.slug } },
       variables: { limit: 1 },
     })
