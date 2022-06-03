@@ -33,7 +33,7 @@ const Navbar: FC = () => {
         </div>
       </div>
       <Link href={router.route === '/en' ? '/en' : '/'}>
-        <a className="flex py-2 w-full justify-start px-2 hover:text-nature-lighter justify-center">
+        <a className="flex py-2 w-14 justify-start px-2 hover:text-nature-lighter justify-center">
           {/* TODO: MAKE NAVBAR COLLAPSABLE */}
           <HomeIcon />
           <span className="ml-1 text-md leading-5 hidden">Homepage</span>
