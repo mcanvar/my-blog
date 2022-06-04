@@ -90,7 +90,7 @@ main {
     }
 
     .post-content {
-        @apply px-4 pt-4 pb-16;
+        @apply px-4 pt-4 pb-16 break-words;
     }
 
     .post-controls {

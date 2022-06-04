@@ -8,8 +8,8 @@ const Navbar: FC = () => {
   const router = useRouter()
 
   return (
-    <nav className="bg-nature-dark w-1/12 text-nature-light z-20 fixed flex flex-col items-center h-screen top-0 left-0">
-      <div className="rounded-full w-8 h-8 relative mt-4">
+    <nav className="bg-nature-dark min-w-[40px] w-1/12 text-nature-light z-20 fixed flex flex-col items-center h-screen top-0 left-0">
+      <div className="rounded-full w-6 h-6 md:w-8 md:h-8 relative mt-4">
         <Image
           alt={'Mevlut'}
           className="rounded-full"
@@ -33,7 +33,7 @@ const Navbar: FC = () => {
         </div>
       </div>
       <Link href={router.route === '/en' ? '/en' : '/'}>
-        <a className="flex py-2 w-14 justify-start px-2 hover:text-nature-lighter justify-center">
+        <a className="flex py-2 w-12 md:w-14 justify-start px-2 hover:text-nature-lighter justify-center">
           {/* TODO: MAKE NAVBAR COLLAPSABLE */}
           <HomeIcon />
           <span className="ml-1 text-md leading-5 hidden">Homepage</span>
@@ -42,7 +42,7 @@ const Navbar: FC = () => {
       <div className="mt-auto mb-4 self-start">
         <a
           href={router.route.slice(0, 3) === '/en' ? '/' : '/en'}
-          className="bg-nature-darker font-bold py-1 px-2 rounded-r-xl hover:bg-nature-light hover:text-nature-dark"
+          className="text-xs md:text-base font-bold bg-nature-darker font-bold py-1 px-2 rounded-r-xl hover:bg-nature-light hover:text-nature-dark"
         >
           {router.route.slice(0, 3) === '/en' ? 'TR' : 'EN'}
         </a>
