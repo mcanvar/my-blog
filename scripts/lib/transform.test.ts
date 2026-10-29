@@ -14,6 +14,38 @@ describe('migration transform', () => {
     expect(md).not.toContain('x()')
   })
 
+  it('flattens highlighted code and keeps unescaped markup inside <pre> as text', () => {
+    const highlighted = htmlToMarkdown(
+      '<pre><code class="language-bash">RewriteEngine On\n<span class="hljs-comment">#comment</span></code></pre>'
+    )
+    expect(highlighted).toContain('```bash\nRewriteEngine On\n#comment\n```')
+
+    const xml = htmlToMarkdown('<pre>\n<rule name="Rule"><match url="^(.*)$" /></rule>\n</pre>')
+    expect(xml).toContain('<rule name="Rule">')
+    expect(xml).toContain('<match url="^(.*)$" />')
+    expect(xml.startsWith('```')).toBe(true)
+  })
+
+  it('promotes the first row of header-less tables', () => {
+    const md = htmlToMarkdown(
+      '<table><tbody><tr><td><strong>Olay</strong></td><td><strong>Etiket</strong></td></tr><tr><td>Nobel</td><td>#mutlu</td></tr></tbody></table>'
+    )
+    expect(md.split('\n').slice(0, 3)).toEqual([
+      '| **Olay** | **Etiket** |',
+      '| --- | --- |',
+      '| Nobel | #mutlu |',
+    ])
+  })
+
+  it('falls back to the misspelled descripton attribute', () => {
+    const post = transformPost(
+      { id: 'd', language: 'tr', title: 'T', slug: 't', descripton: 'Eski özet' },
+      {},
+      []
+    )
+    expect(post.description).toBe('Eski özet')
+  })
+
   it('keeps ids and dates, maps language, flags for review', () => {
     const warnings: MigrationWarning[] = []
     const post = transformPost(

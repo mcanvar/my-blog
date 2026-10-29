@@ -41,6 +41,12 @@ const turndown = new TurndownService({
   emDelimiter: '*',
   strongDelimiter: '**',
   hr: '---',
+  // A <pre> holding only unescaped markup has no visible text, so turndown would treat it as blank.
+  blankReplacement: (_content, node) => {
+    const el = node as unknown as HTMLElement
+    if (el.nodeName === 'PRE' && el.children.length > 0) return preToMarkdown(el)
+    return (node as { isBlock?: boolean }).isBlock ? '\n\n' : ''
+  },
 })
 turndown.use(gfm)
 // The page already has the H1; demote any H1 inside old content.
@@ -50,11 +56,72 @@ turndown.addRule('demoteH1', {
 })
 turndown.remove(['script', 'style', 'iframe', 'object', 'embed'])
 
+const INLINE_CODE_TAGS = new Set(['SPAN', 'BR', 'B', 'STRONG', 'I', 'EM', 'A', 'CODE'])
+
+function decodeEntities(text: string): string {
+  return text
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#(\d+);/g, (_, code: string) => String.fromCodePoint(Number(code)))
+    .replace(/&amp;/g, '&')
+}
+
+/**
+ * Code blocks. Highlighter spans are flattened to text; raw markup pasted unescaped into a <pre>
+ * (e.g. XML config) was parsed as elements by the browser, so it is serialized back as text.
+ */
+function preToMarkdown(pre: HTMLElement): string {
+  const code = pre.querySelector('code')
+  const target = code ?? pre
+  const language = /language-([\w+-]+)/.exec(code?.getAttribute('class') ?? '')?.[1] ?? ''
+  const hasMarkup = Array.from(target.querySelectorAll('*')).some(
+    (el) => !INLINE_CODE_TAGS.has(el.nodeName)
+  )
+  const raw = hasMarkup
+    ? decodeEntities(
+        target.innerHTML
+          .replace(/<br\s*\/?>/gi, '\n')
+          .replace(/<\/?(span|b|strong|i|em|a|code)(\s[^>]*)?>/gi, '')
+      )
+    : (target.textContent ?? '')
+  const text = raw.replace(/^\n+/, '').replace(/\s+$/, '')
+  const fence = text.includes('```') ? '~~~' : '```'
+  return `\n\n${fence}${language}\n${text}\n${fence}\n\n`
+}
+
+turndown.addRule('preformatted', {
+  filter: 'pre',
+  replacement: (_content, node) => preToMarkdown(node as HTMLElement),
+})
+
+/** Escape <pre> blocks (without <code>) that contain raw, non-formatting tags, so they survive parsing verbatim. */
+function escapeRawMarkupInPre(html: string): string {
+  return html.replace(
+    /<pre(\s[^>]*)?>([\s\S]*?)<\/pre>/gi,
+    (block, attrs: string | undefined, inner: string) => {
+      if (/<code[\s>]/i.test(inner)) return block
+      const hasRawTags = /<(?!\/?(?:span|br|b|strong|i|em|a)\b)\/?[a-z][^>]*>/i.test(inner)
+      if (!hasRawTags) return block
+      return `<pre${attrs ?? ''}>${inner.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>`
+    }
+  )
+}
+
 export function htmlToMarkdown(html: string): string {
-  return turndown
-    .turndown(html)
-    .replace(/\n{3,}/g, '\n\n')
-    .trim()
+  return (
+    turndown
+      .turndown(escapeRawMarkupInPre(html))
+      // Old tables had no <th>: promote the first row when the generated header row is empty.
+      .replace(
+        /^\|(?:[ \t]*\|)+\n(\|(?:[ \t]*:?-+:?[ \t]*\|)+)\n(\|.*\|)$/gm,
+        (_m, separator: string, first: string) => `${first}\n${separator}`
+      )
+      .replace(/\n{3,}/g, '\n\n')
+      .trim()
+  )
 }
 
 export function externalImages(html: string): string[] {
@@ -88,7 +155,10 @@ export function transformPost(
     warnings.push({ id: item.id, message: `external image kept as-is: ${src}` })
   }
 
-  const description = (item.description ?? '').trim() || excerpt(markdownToPlainText(content), 160)
+  // Some old items carry the summary in a misspelled `descripton` attribute.
+  const oldDescription =
+    item.description ?? (typeof item.descripton === 'string' ? item.descripton : '')
+  const description = oldDescription.trim() || excerpt(markdownToPlainText(content), 160)
 
   return {
     id: item.id,
