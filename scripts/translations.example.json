@@ -1,0 +1,5 @@
+{
+  "_comment": "Copy to scripts/translations.json (gitignored). Give a TR post and its EN version the same value to link them for hreflang. Keys are `<locale>:<slug>` or the old post id.",
+  "tr:merhaba-dunya": "hello-world",
+  "en:hello-world": "hello-world"
+}

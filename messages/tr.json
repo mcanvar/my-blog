@@ -1,0 +1,132 @@
+{
+  "Meta": {
+    "homeTitle": "Mevlüt Canvar — Yazılım, doğa ve arada kalan her şey",
+    "homeDescription": "Mevlüt Canvar'ın kişisel blogu: yazılım geliştirme, AWS, React ve doğa üzerine notlar.",
+    "pageTitle": "Sayfa {page}",
+    "archiveTitle": "Arşiv",
+    "archiveDescription": "Tüm yazılar, yıllara göre.",
+    "tagTitle": "#{tag} etiketli yazılar",
+    "tagDescription": "#{tag} etiketiyle yayımlanan {count} yazı.",
+    "aboutTitle": "Hakkımda",
+    "privacyTitle": "Gizlilik",
+    "privacyDescription": "Bu sitenin topladığı veriler ve yorum sistemi hakkında bilgilendirme."
+  },
+  "Nav": {
+    "main": "Ana menü",
+    "home": "Ana sayfa",
+    "archive": "Arşiv",
+    "tags": "Etiketler",
+    "search": "Ara",
+    "about": "Hakkımda",
+    "theme": "Temayı değiştir",
+    "language": "English",
+    "languageShort": "EN",
+    "skip": "İçeriğe geç",
+    "avatarAlt": "Mevlüt Canvar"
+  },
+  "Home": {
+    "greeting": "Selam 👋",
+    "intro": "Yazılım, doğa ve arada kalan her şey — patikada {count} durak.",
+    "searchHint": "Ara"
+  },
+  "Trail": {
+    "label": "Yazılar",
+    "previous": "Önceki yazılar",
+    "next": "Sonraki yazılar",
+    "olderPosts": "Daha eski yazılar",
+    "loading": "Yükleniyor…",
+    "stop": "Durak {current} / {total}",
+    "yearPosts": "{count} yazı",
+    "minutes": "{minutes} dk",
+    "end": "Patikanın başına geldin.",
+    "jumpToYear": "{year} yılına git",
+    "scrubber": "Zaman çizelgesi"
+  },
+  "Post": {
+    "breadcrumbHome": "Patika",
+    "published": "Yayımlandı",
+    "updated": "Güncellendi {date}",
+    "readingTime": "{minutes} dk okuma",
+    "readIn": "Read in English →",
+    "tldr": "Kısaca",
+    "keyTakeaways": "Akılda kalsın",
+    "faq": "Sık sorulanlar",
+    "sources": "Kaynaklar",
+    "toc": "Bu yazıda",
+    "copyLink": "Bağlantıyı kopyala",
+    "copied": "Kopyalandı",
+    "viewMarkdown": "Markdown olarak görüntüle",
+    "share": "Paylaş",
+    "previousStop": "← Önceki durak",
+    "nextStop": "Sonraki durak →",
+    "related": "Aynı patikadan",
+    "draftBanner": "Önizleme: bu yazı henüz yayımlanmadı.",
+    "exitPreview": "Önizlemeden çık",
+    "coverFallback": "Kapak görseli"
+  },
+  "Comments": {
+    "title": "Yorumlar",
+    "count": "{count, plural, =0 {Henüz yorum yok} one {# yorum} other {# yorum}}",
+    "authorBadge": "Yazar",
+    "reply": "Yanıtla",
+    "cancelReply": "Vazgeç",
+    "replyingTo": "{name} kişisine yanıt",
+    "formTitle": "Yorum yaz",
+    "name": "Adın",
+    "body": "Yorumun",
+    "bodyHint": "Düz metin. En fazla {max} karakter ve {links} bağlantı.",
+    "submit": "Gönder",
+    "submitting": "Gönderiliyor…",
+    "pending": "Teşekkürler! Yorumun onaylandıktan sonra görünecek.",
+    "invalid": "Lütfen alanları kontrol et.",
+    "closed": "Bu yazı yorumlara kapalı.",
+    "rateLimited": "Çok hızlı gidiyorsun. Biraz sonra tekrar dene.",
+    "verificationFailed": "Doğrulama başarısız oldu. Sayfayı yenileyip tekrar dene.",
+    "error": "Bir şeyler ters gitti. Lütfen tekrar dene.",
+    "notConfigured": "Yorumlar şu anda kapalı.",
+    "moderationNote": "Tüm yorumlar yayımlanmadan önce onaylanır.",
+    "recaptchaNotice": "Bu site reCAPTCHA ile korunmaktadır; Google <privacy>Gizlilik Politikası</privacy> ve <terms>Hizmet Şartları</terms> geçerlidir. Ayrıntılar için <policy>gizlilik</policy> sayfasına bak.",
+    "honeypot": "Bu alanı boş bırak"
+  },
+  "Archive": {
+    "title": "Arşiv",
+    "intro": "{count} yazı, en yeniden en eskiye.",
+    "tags": "Etiketler"
+  },
+  "Tags": {
+    "title": "#{tag}",
+    "intro": "{count, plural, one {# yazı} other {# yazı}}",
+    "all": "Tüm etiketler"
+  },
+  "About": {
+    "title": "Hakkımda",
+    "links": "Bağlantılar",
+    "topics": "Yazdığım konular",
+    "latest": "Son yazılar"
+  },
+  "Privacy": {
+    "title": "Gizlilik",
+    "updated": "Son güncelleme: {date}"
+  },
+  "NotFound": {
+    "title": "Patikadan çıktın.",
+    "body": "Aradığın durak taşınmış ya da hiç olmamış olabilir.",
+    "home": "Ana sayfaya dön",
+    "archive": "Arşiv"
+  },
+  "Error": {
+    "title": "Bir şeyler ters gitti.",
+    "retry": "Tekrar dene"
+  },
+  "Search": {
+    "placeholder": "Yazılarda ara…",
+    "posts": "Yazılar",
+    "tags": "Etiketler",
+    "shortcuts": "Kısayollar",
+    "empty": "Sonuç bulunamadı.",
+    "results": "{count} sonuç",
+    "switchLanguage": "Switch to English",
+    "close": "Kapat",
+    "open": "Aramayı aç"
+  }
+}

@@ -1,0 +1,10 @@
+#!/bin/sh
+# Blocks commits that contain secrets. Install gitleaks with `brew install gitleaks`.
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact --no-banner || {
+    echo "gitleaks found something that looks like a secret. Move it to Amplify secrets / env vars."
+    exit 1
+  }
+else
+  echo "pre-commit: gitleaks not installed, skipping secret scan (brew install gitleaks)."
+fi

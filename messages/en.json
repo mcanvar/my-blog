@@ -1,0 +1,132 @@
+{
+  "Meta": {
+    "homeTitle": "Mevlüt Canvar — Software, nature and everything in between",
+    "homeDescription": "Mevlüt Canvar's personal blog: notes on software engineering, AWS, React and the outdoors.",
+    "pageTitle": "Page {page}",
+    "archiveTitle": "Archive",
+    "archiveDescription": "Every post, grouped by year.",
+    "tagTitle": "Posts tagged #{tag}",
+    "tagDescription": "{count} posts tagged #{tag}.",
+    "aboutTitle": "About",
+    "privacyTitle": "Privacy",
+    "privacyDescription": "What this site collects and how the comment system works."
+  },
+  "Nav": {
+    "main": "Main menu",
+    "home": "Home",
+    "archive": "Archive",
+    "tags": "Tags",
+    "search": "Search",
+    "about": "About",
+    "theme": "Toggle theme",
+    "language": "Türkçe",
+    "languageShort": "TR",
+    "skip": "Skip to content",
+    "avatarAlt": "Mevlüt Canvar"
+  },
+  "Home": {
+    "greeting": "Hi 👋",
+    "intro": "Software, nature and everything in between — {count} stops on the trail.",
+    "searchHint": "Search"
+  },
+  "Trail": {
+    "label": "Posts",
+    "previous": "Previous posts",
+    "next": "Next posts",
+    "olderPosts": "Older posts",
+    "loading": "Loading…",
+    "stop": "Stop {current} / {total}",
+    "yearPosts": "{count} posts",
+    "minutes": "{minutes} min",
+    "end": "You reached the trailhead.",
+    "jumpToYear": "Jump to {year}",
+    "scrubber": "Timeline"
+  },
+  "Post": {
+    "breadcrumbHome": "Trail",
+    "published": "Published",
+    "updated": "Updated {date}",
+    "readingTime": "{minutes} min read",
+    "readIn": "Türkçe oku →",
+    "tldr": "TL;DR",
+    "keyTakeaways": "Key takeaways",
+    "faq": "FAQ",
+    "sources": "Sources",
+    "toc": "On this page",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "viewMarkdown": "View as Markdown",
+    "share": "Share",
+    "previousStop": "← Previous stop",
+    "nextStop": "Next stop →",
+    "related": "From the same trail",
+    "draftBanner": "Preview: this post is not published yet.",
+    "exitPreview": "Exit preview",
+    "coverFallback": "Cover image"
+  },
+  "Comments": {
+    "title": "Comments",
+    "count": "{count, plural, =0 {No comments yet} one {# comment} other {# comments}}",
+    "authorBadge": "Author",
+    "reply": "Reply",
+    "cancelReply": "Cancel",
+    "replyingTo": "Replying to {name}",
+    "formTitle": "Leave a comment",
+    "name": "Your name",
+    "body": "Your comment",
+    "bodyHint": "Plain text. Up to {max} characters and {links} links.",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "pending": "Thanks! Your comment will appear after approval.",
+    "invalid": "Please check the fields.",
+    "closed": "Comments are closed for this post.",
+    "rateLimited": "Slow down a little and try again later.",
+    "verificationFailed": "Verification failed. Refresh the page and try again.",
+    "error": "Something went wrong. Please try again.",
+    "notConfigured": "Comments are currently unavailable.",
+    "moderationNote": "Every comment is reviewed before it is published.",
+    "recaptchaNotice": "This site is protected by reCAPTCHA and the Google <privacy>Privacy Policy</privacy> and <terms>Terms of Service</terms> apply. See the <policy>privacy</policy> page for details.",
+    "honeypot": "Leave this field empty"
+  },
+  "Archive": {
+    "title": "Archive",
+    "intro": "{count} posts, newest first.",
+    "tags": "Tags"
+  },
+  "Tags": {
+    "title": "#{tag}",
+    "intro": "{count, plural, one {# post} other {# posts}}",
+    "all": "All tags"
+  },
+  "About": {
+    "title": "About",
+    "links": "Links",
+    "topics": "Topics I write about",
+    "latest": "Latest posts"
+  },
+  "Privacy": {
+    "title": "Privacy",
+    "updated": "Last updated: {date}"
+  },
+  "NotFound": {
+    "title": "You wandered off the trail.",
+    "body": "The stop you are looking for has moved or never existed.",
+    "home": "Back to home",
+    "archive": "Archive"
+  },
+  "Error": {
+    "title": "Something went wrong.",
+    "retry": "Try again"
+  },
+  "Search": {
+    "placeholder": "Search posts…",
+    "posts": "Posts",
+    "tags": "Tags",
+    "shortcuts": "Shortcuts",
+    "empty": "No results.",
+    "results": "{count} results",
+    "switchLanguage": "Türkçeye geç",
+    "close": "Close",
+    "open": "Open search"
+  }
+}

@@ -1,0 +1,21 @@
+/* Amplify UI Authenticator in the blog's palette. */
+.admin-auth [data-amplify-authenticator] {
+  --amplify-colors-brand-primary-10: #ecebe5;
+  --amplify-colors-brand-primary-20: #d6d5ce;
+  --amplify-colors-brand-primary-40: #a4a69c;
+  --amplify-colors-brand-primary-60: #4c594f;
+  --amplify-colors-brand-primary-80: #35403a;
+  --amplify-colors-brand-primary-90: #2c3530;
+  --amplify-colors-brand-primary-100: #252626;
+  --amplify-components-authenticator-router-border-width: 0;
+  --amplify-components-authenticator-router-box-shadow: none;
+  --amplify-components-authenticator-router-background-color: transparent;
+  --amplify-components-button-border-radius: 0.6rem;
+  --amplify-components-fieldcontrol-border-radius: 0.6rem;
+  --amplify-fonts-default-variable: var(--ff-display), system-ui, sans-serif;
+  --amplify-fonts-default-static: var(--ff-display), system-ui, sans-serif;
+}
+
+.admin-auth [data-amplify-authenticator] [data-amplify-container] {
+  width: 100%;
+}
