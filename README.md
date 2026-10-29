@@ -88,12 +88,21 @@ npm run dev                                                       # in another t
 ### Checks
 
 ```bash
-npm run lint
-npm run typecheck        # app + amplify backend
-npm test                 # unit tests (Vitest)
+npm run verify           # what Amplify runs: npm-10 lock file check, lint, types, unit tests,
+                         # backend synth, production build (fixtures) — free, ~2 min
+npm run verify:cloud     # + production build against the deployed main backend (AWS credentials)
 npm run test:e2e         # Playwright against fixtures
-BLOG_DATA_SOURCE=fixtures npm run build
 ```
+
+Run `npm run verify:cloud` before pushing changes to `amplify/`, data access or anything that talks to AWS.
+
+### Deploys are gated by CI
+
+Amplify auto-build is **off** for `main`. Every push runs GitHub Actions (secret scan, lint, types, unit
+tests, build, end-to-end tests); only when all of them pass does the `deploy` job call the Amplify
+webhook (stored in the `AMPLIFY_WEBHOOK_URL` repository secret). A failing commit never starts a paid
+Amplify build, and the last successful deploy stays live. To deploy manually: Amplify console →
+_Run job_, or re-run the CI workflow.
 
 ## Configuration & secrets
 

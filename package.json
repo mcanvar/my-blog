@@ -15,13 +15,15 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "pretypecheck": "npm run ensure-outputs",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p amplify/tsconfig.json",
+    "typecheck": "next typegen && tsc --noEmit && tsc --noEmit -p amplify/tsconfig.json",
     "pretest": "npm run ensure-outputs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "sandbox": "ampx sandbox",
-    "migrate": "tsx scripts/migrate-from-gen1.ts"
+    "migrate": "tsx scripts/migrate-from-gen1.ts",
+    "verify": "npm run ensure-outputs && node scripts/verify.mjs",
+    "verify:cloud": "npm run ensure-outputs && node scripts/verify.mjs --cloud"
   },
   "dependencies": {
     "@aws-amplify/adapter-nextjs": "^1.8.1",
