@@ -18,17 +18,28 @@ function errorMessage(errors: { message: string }[] | undefined): string {
 
 // ---------- Amplify (guest) readers, wrapped in the Next data cache
 
+async function amplifyPublic() {
+  const [{ publicClient }, { guestContext, withThrottleRetry }] = await Promise.all([
+    import('../amplify/server'),
+    import('../amplify/guest'),
+  ])
+  return { publicClient, guestContext, withThrottleRetry }
+}
+
 const amplifySummaries = unstable_cache(
   async (locale: Locale): Promise<PostSummary[]> => {
-    const { publicClient, runWithAmplifyServerContext } = await import('../amplify/server')
+    const { publicClient, guestContext, withThrottleRetry } = await amplifyPublic()
     const items: PostSummary[] = []
     let nextToken: string | null | undefined
     do {
-      const response = await runWithAmplifyServerContext({
-        nextServerContext: null,
-        operation: (ctx) =>
-          publicClient.queries.listPublishedPosts(ctx, { locale, limit: 100, nextToken }),
-      })
+      const token = nextToken
+      const response = await withThrottleRetry(() =>
+        publicClient.queries.listPublishedPosts(guestContext(), {
+          locale,
+          limit: 100,
+          nextToken: token,
+        })
+      )
       if (response.errors?.length)
         throw new Error(`listPublishedPosts: ${errorMessage(response.errors)}`)
       for (const raw of response.data?.items ?? []) {
@@ -45,11 +56,10 @@ const amplifySummaries = unstable_cache(
 
 const amplifyPost = unstable_cache(
   async (locale: Locale, slug: string): Promise<Post | null> => {
-    const { publicClient, runWithAmplifyServerContext } = await import('../amplify/server')
-    const response = await runWithAmplifyServerContext({
-      nextServerContext: null,
-      operation: (ctx) => publicClient.queries.getPublishedPost(ctx, { locale, slug }),
-    })
+    const { publicClient, guestContext, withThrottleRetry } = await amplifyPublic()
+    const response = await withThrottleRetry(() =>
+      publicClient.queries.getPublishedPost(guestContext(), { locale, slug })
+    )
     if (response.errors?.length)
       throw new Error(`getPublishedPost: ${errorMessage(response.errors)}`)
     return toPost(response.data as Record<string, unknown> | null)
@@ -60,11 +70,10 @@ const amplifyPost = unstable_cache(
 
 const amplifyComments = unstable_cache(
   async (postId: string): Promise<PublicComment[]> => {
-    const { publicClient, runWithAmplifyServerContext } = await import('../amplify/server')
-    const response = await runWithAmplifyServerContext({
-      nextServerContext: null,
-      operation: (ctx) => publicClient.queries.listApprovedComments(ctx, { postId }),
-    })
+    const { publicClient, guestContext, withThrottleRetry } = await amplifyPublic()
+    const response = await withThrottleRetry(() =>
+      publicClient.queries.listApprovedComments(guestContext(), { postId })
+    )
     if (response.errors?.length)
       throw new Error(`listApprovedComments: ${errorMessage(response.errors)}`)
     return (response.data ?? [])
@@ -77,11 +86,10 @@ const amplifyComments = unstable_cache(
 
 const amplifySettings = unstable_cache(
   async (): Promise<SiteSettings> => {
-    const { publicClient, runWithAmplifyServerContext } = await import('../amplify/server')
-    const response = await runWithAmplifyServerContext({
-      nextServerContext: null,
-      operation: (ctx) => publicClient.models.SiteSettings.get(ctx, { id: SETTINGS_ID }),
-    })
+    const { publicClient, guestContext, withThrottleRetry } = await amplifyPublic()
+    const response = await withThrottleRetry(() =>
+      publicClient.models.SiteSettings.get(guestContext(), { id: SETTINGS_ID })
+    )
     if (response.errors?.length) return defaultSettings
     return toSettings(response.data as Record<string, unknown> | null)
   },
