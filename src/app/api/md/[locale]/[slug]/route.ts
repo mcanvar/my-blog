@@ -5,7 +5,7 @@ import { postPath } from '@/lib/seo/urls'
 import { absoluteUrl } from '@/lib/site'
 import { LOCALES, type Locale } from '@/lib/types'
 
-export const revalidate = 300
+export const dynamic = 'force-dynamic'
 
 /** Served at /<slug>.md and /en/<slug>.md (rewritten by the proxy). */
 export async function GET(_request: Request, { params }: RouteContext<'/api/md/[locale]/[slug]'>) {
