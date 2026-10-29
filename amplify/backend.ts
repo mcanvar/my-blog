@@ -3,6 +3,7 @@ import { Duration, RemovalPolicy, Stack } from 'aws-cdk-lib'
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront'
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins'
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
+import * as iam from 'aws-cdk-lib/aws-iam'
 import * as sns from 'aws-cdk-lib/aws-sns'
 import * as subscriptions from 'aws-cdk-lib/aws-sns-subscriptions'
 import { auth } from './auth/resource'
@@ -38,6 +39,8 @@ if (commentTable) {
 }
 
 // ---- Public reader: read-only access to the two tables it serves.
+// The model tables are imported references, so `grantReadData` would cover the table
+// but not its indexes; grant Query/GetItem on both explicitly.
 const modelTables = backend.data.resources.tables
 const readerLambda = backend.publicReader.resources.lambda
 for (const [name, envName] of [
@@ -46,7 +49,12 @@ for (const [name, envName] of [
 ] as const) {
   const table = modelTables[name]
   if (!table) throw new Error(`Missing ${name} table`)
-  table.grantReadData(readerLambda)
+  readerLambda.addToRolePolicy(
+    new iam.PolicyStatement({
+      actions: ['dynamodb:Query', 'dynamodb:GetItem'],
+      resources: [table.tableArn, `${table.tableArn}/index/*`],
+    })
+  )
   backend.publicReader.addEnvironment(envName, table.tableName)
 }
 
