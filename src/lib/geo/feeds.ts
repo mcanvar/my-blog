@@ -3,18 +3,10 @@ import { renderMarkdown } from '../content/markdown'
 import { getPost, getPostSummaries, getSiteSettings } from '../data/public'
 import { feedPath, homePath, postPath } from '../seo/urls'
 import { absoluteUrl, PRODUCTION_HOST, site } from '../site'
+import { escapeXml } from '../seo/text-response'
 import type { Locale, Post } from '../types'
 
 const FEED_SIZE = 20
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-}
 
 function cdata(value: string): string {
   return `<![CDATA[${value.replace(/]]>/g, ']]]]><![CDATA[>')}]]>`

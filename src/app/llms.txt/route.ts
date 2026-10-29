@@ -1,8 +1,9 @@
 import { getPostSummaries, getSiteSettings } from '@/lib/data/public'
 import { homePath, postMarkdownPath, staticPath } from '@/lib/seo/urls'
+import { textResponse } from '@/lib/seo/text-response'
 import { absoluteUrl, site } from '@/lib/site'
 
-export const revalidate = 300
+export const dynamic = 'force-dynamic'
 
 /** https://llmstxt.org — a map of the site for language models. */
 export async function GET() {
@@ -40,7 +41,5 @@ export async function GET() {
     '',
   ]
 
-  return new Response(lines.join('\n'), {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-  })
+  return textResponse(lines.join('\n'), 'text/plain; charset=utf-8')
 }
