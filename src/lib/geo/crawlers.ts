@@ -1,0 +1,22 @@
+/** AI and answer-engine crawlers the site addresses explicitly in robots.txt. */
+export const AI_CRAWLERS = [
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-SearchBot',
+  'Claude-User',
+  'anthropic-ai',
+  'PerplexityBot',
+  'Perplexity-User',
+  'Google-Extended',
+  'GoogleOther',
+  'Applebot-Extended',
+  'Amazonbot',
+  'meta-externalagent',
+  'CCBot',
+  'cohere-ai',
+  'DuckAssistBot',
+  'MistralAI-User',
+  'YouBot',
+] as const

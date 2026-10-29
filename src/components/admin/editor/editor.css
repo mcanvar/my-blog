@@ -1,0 +1,42 @@
+.rich-editor p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--sage);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.rich-editor pre {
+  font-family: var(--ff-mono), ui-monospace, monospace;
+  font-size: 0.82em;
+  line-height: 1.6;
+  border-radius: 0.9rem;
+  padding: 1em 1.2em;
+  background: #252626;
+  color: #e7e6e0;
+  overflow-x: auto;
+}
+
+.rich-editor pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+
+.rich-editor img.ProseMirror-selectednode {
+  outline: 3px solid var(--fern);
+}
+
+.rich-editor .selectedCell {
+  background: color-mix(in oklab, var(--sage) 25%, transparent);
+}
+
+.rich-editor table p {
+  margin: 0;
+}
+
+.rich-editor.article-body {
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
