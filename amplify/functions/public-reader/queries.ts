@@ -102,3 +102,39 @@ export async function listApprovedComments(
   } while (startKey && items.length < 1000)
   return items
 }
+
+/**
+ * Amplify Gen 2 invokes function handlers with `{ typeName, fieldName, arguments, identity, ... }`
+ * (fieldName at the top level, not under `info` like a plain AppSync Lambda resolver).
+ */
+export interface PublicReaderEvent {
+  fieldName?: string
+  info?: { fieldName?: string }
+  arguments?: Record<string, unknown>
+}
+
+export async function routePublicQuery(
+  event: PublicReaderEvent,
+  query: QueryFn,
+  tables: { post: string; comment: string }
+) {
+  const args = event.arguments ?? {}
+  const fieldName = event.fieldName ?? event.info?.fieldName
+  switch (fieldName) {
+    case 'listPublishedPosts':
+      return listPublishedPosts(query, tables.post, {
+        locale: String(args.locale),
+        limit: typeof args.limit === 'number' ? args.limit : null,
+        nextToken: typeof args.nextToken === 'string' ? args.nextToken : null,
+      })
+    case 'getPublishedPost':
+      return getPublishedPost(query, tables.post, {
+        locale: String(args.locale),
+        slug: String(args.slug),
+      })
+    case 'listApprovedComments':
+      return listApprovedComments(query, tables.comment, { postId: String(args.postId) })
+    default:
+      throw new Error(`Unknown field ${fieldName ?? '(none)'}`)
+  }
+}
