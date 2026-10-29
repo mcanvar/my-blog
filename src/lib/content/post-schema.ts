@@ -27,7 +27,7 @@ export const postInputSchema = z.object({
     .trim()
     .superRefine((value, ctx) => {
       const error = validateSlug(value)
-      if (error) ctx.addIssue({ code: z.ZodIssueCode.custom, message: error })
+      if (error) ctx.addIssue({ code: 'custom', message: error })
     }),
   title: z.string().trim().min(3, 'Title is required').max(140),
   seoTitle: trimmed(70).nullable(),
