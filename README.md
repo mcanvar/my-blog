@@ -108,17 +108,18 @@ _Run job_, or re-run the CI workflow.
 
 Nothing below is committed. `.env.example` lists the names only.
 
-| Name                                                                                               | Where to set it                          | Used by                                                           |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------- | ----------------------------------------------------------------- |
-| `RECAPTCHA_SITE_KEY`                                                                               | Amplify **Secret**                       | comment-guard Lambda                                              |
-| `RECAPTCHA_PROJECT_ID`                                                                             | Amplify **Secret**                       | comment-guard Lambda                                              |
-| `RECAPTCHA_API_KEY`                                                                                | Amplify **Secret**                       | comment-guard Lambda                                              |
-| `IP_HASH_SALT`                                                                                     | Amplify **Secret**                       | comment-guard Lambda (IPs are only stored as HMAC)                |
-| `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`                                                                   | Amplify Hosting **environment variable** | comment form (public by design)                                   |
-| `NEXT_PUBLIC_SITE_URL`                                                                             | Amplify Hosting env var, **per branch**  | canonical URLs, sitemap, feeds. Production: `https://mcanvar.dev` |
-| `ADMIN_NOTIFY_EMAIL`                                                                               | Amplify Hosting env var                  | subscribes this address to new-comment emails (SNS)               |
-| `INDEXNOW_KEY`                                                                                     | Amplify Hosting env var                  | IndexNow pings + `/<key>.txt` (e.g. `openssl rand -hex 16`)       |
-| `NEXT_PUBLIC_GSC_VERIFICATION`, `NEXT_PUBLIC_BING_VERIFICATION`, `NEXT_PUBLIC_YANDEX_VERIFICATION` | Amplify Hosting env vars (optional)      | search console verification                                       |
+| Name                                                                                               | Where to set it                               | Used by                                                                                                           |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `RECAPTCHA_SITE_KEY`                                                                               | Amplify **Secret**                            | comment-guard Lambda                                                                                              |
+| `RECAPTCHA_PROJECT_ID`                                                                             | Amplify **Secret**                            | comment-guard Lambda                                                                                              |
+| `RECAPTCHA_API_KEY`                                                                                | Amplify **Secret**                            | comment-guard Lambda                                                                                              |
+| `IP_HASH_SALT`                                                                                     | Amplify **Secret**                            | comment-guard Lambda (IPs are only stored as HMAC)                                                                |
+| `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`                                                                   | Amplify Hosting **environment variable**      | comment form (public by design)                                                                                   |
+| `NEXT_PUBLIC_SITE_URL`                                                                             | Amplify Hosting env var, **per branch**       | canonical URLs, sitemap, feeds. Production: `https://mcanvar.dev`                                                 |
+| `ADMIN_NOTIFY_EMAIL`                                                                               | Amplify Hosting env var                       | subscribes this address to new-comment emails (SNS)                                                               |
+| `MEDIA_DOMAIN`, `MEDIA_HOSTED_ZONE_ID`                                                             | Amplify Hosting env vars on the `main` branch | media CDN domain (`cdn.mcanvar.dev`) + its Route 53 zone; the backend adds the certificate, alias and DNS records |
+| `INDEXNOW_KEY`                                                                                     | Amplify Hosting env var                       | IndexNow pings + `/<key>.txt` (e.g. `openssl rand -hex 16`)                                                       |
+| `NEXT_PUBLIC_GSC_VERIFICATION`, `NEXT_PUBLIC_BING_VERIFICATION`, `NEXT_PUBLIC_YANDEX_VERIFICATION` | Amplify Hosting env vars (optional)           | search console verification                                                                                       |
 
 Guardrails: `.gitignore` covers `.env*`, `amplify_outputs*` and `.amplify/`; `.githooks/pre-commit`
 runs `gitleaks` if installed (`brew install gitleaks`); CI runs a gitleaks scan on every push.
@@ -197,7 +198,8 @@ backup/export), the `amplify-myblog-dev-*` deployment bucket, IAM roles and stac
 ## Writing
 
 - `/admin/posts/new` — Tiptap editor that stores **Markdown**; `/` opens a block menu; drop or paste
-  images (resized to WebP and uploaded to S3, alt text asked for).
+  images. Images are resized in the browser (max 2000px) to WebP, uploaded to S3 with 640/1200px copies
+  for `srcset` and a one-year immutable cache header, and served from `cdn.mcanvar.dev` (CloudFront).
 - Live preview uses the site's renderer. The sidebar has a SERP preview, length meters, slug checks
   and a **SEO/GEO readiness score**; GEO fields: TL;DR, key takeaways, FAQ, sources.
 - Drafts autosave. Published posts change only when you press **Update**. Every publish stores a

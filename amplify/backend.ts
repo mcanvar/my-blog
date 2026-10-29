@@ -1,9 +1,12 @@
 import { defineBackend } from '@aws-amplify/backend'
-import { Duration, RemovalPolicy, Stack } from 'aws-cdk-lib'
+import { RemovalPolicy, Stack } from 'aws-cdk-lib'
+import * as acm from 'aws-cdk-lib/aws-certificatemanager'
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront'
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins'
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
 import * as iam from 'aws-cdk-lib/aws-iam'
+import * as route53 from 'aws-cdk-lib/aws-route53'
+import * as route53Targets from 'aws-cdk-lib/aws-route53-targets'
 import * as sns from 'aws-cdk-lib/aws-sns'
 import * as subscriptions from 'aws-cdk-lib/aws-sns-subscriptions'
 import { auth } from './auth/resource'
@@ -61,7 +64,30 @@ for (const [name, envName] of [
 // ---- Media: private bucket served through CloudFront with origin access control.
 const bucket = backend.storage.resources.bucket
 const mediaStack = Stack.of(bucket)
+
+// Optional custom domain for media (production only), e.g. cdn.mcanvar.dev. Both values come from
+// Amplify environment variables: MEDIA_DOMAIN and MEDIA_HOSTED_ZONE_ID (the Route 53 zone of its parent).
+const mediaDomain = isProductionBranch ? process.env.MEDIA_DOMAIN?.trim() : undefined
+const mediaZoneId = process.env.MEDIA_HOSTED_ZONE_ID?.trim()
+const mediaZone =
+  mediaDomain && mediaZoneId
+    ? route53.HostedZone.fromHostedZoneAttributes(mediaStack, 'MediaZone', {
+        hostedZoneId: mediaZoneId,
+        zoneName: mediaDomain.split('.').slice(1).join('.'),
+      })
+    : undefined
+const mediaCertificate =
+  mediaZone && mediaDomain
+    ? new acm.Certificate(mediaStack, 'MediaCertificate', {
+        domainName: mediaDomain,
+        validation: acm.CertificateValidation.fromDns(mediaZone),
+      })
+    : undefined
+
 const mediaCdn = new cloudfront.Distribution(mediaStack, 'MediaCdn', {
+  ...(mediaDomain && mediaCertificate
+    ? { domainNames: [mediaDomain], certificate: mediaCertificate }
+    : {}),
   comment: 'Blog media',
   defaultBehavior: {
     origin: origins.S3BucketOrigin.withOriginAccessControl(bucket),
@@ -73,6 +99,20 @@ const mediaCdn = new cloudfront.Distribution(mediaStack, 'MediaCdn', {
   httpVersion: cloudfront.HttpVersion.HTTP2_AND_3,
   priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
 })
+
+if (mediaZone && mediaDomain) {
+  const target = route53.RecordTarget.fromAlias(new route53Targets.CloudFrontTarget(mediaCdn))
+  new route53.ARecord(mediaStack, 'MediaAliasA', {
+    zone: mediaZone,
+    recordName: mediaDomain,
+    target,
+  })
+  new route53.AaaaRecord(mediaStack, 'MediaAliasAAAA', {
+    zone: mediaZone,
+    recordName: mediaDomain,
+    target,
+  })
+}
 
 // ---- Comment guard: rate-limit counters and admin notifications.
 const commentLambda = backend.commentGuard.resources.lambda
@@ -101,7 +141,9 @@ if (notifyEmail) {
 
 backend.addOutput({
   custom: {
-    mediaBaseUrl: `https://${mediaCdn.distributionDomainName}`,
-    mediaCacheSeconds: Duration.days(365).toSeconds(),
+    mediaBaseUrl:
+      mediaZone && mediaDomain
+        ? `https://${mediaDomain}`
+        : `https://${mediaCdn.distributionDomainName}`,
   },
 })

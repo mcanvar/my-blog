@@ -11,7 +11,7 @@ import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
 import type { TocItem } from '../types'
-import { dimensionsFromPath, resolveMediaUrl } from './media'
+import { CONTENT_IMAGE_SIZES, dimensionsFromPath, resolveMediaUrl, responsiveSrcSet } from './media'
 
 export interface RenderedMarkdown {
   html: string
@@ -23,14 +23,19 @@ interface RenderOptions {
   siteHost?: string
 }
 
-/** Images: resolve /media/ paths, add intrinsic size from the file name, lazy-load. */
+/** Images: resolve /media/ paths, add intrinsic size and responsive srcset, lazy-load. */
 function rehypeMedia(options: RenderOptions) {
   return (tree: Root) => {
     visit(tree, 'element', (node: Element) => {
       if (node.tagName !== 'img') return
       const src = String(node.properties.src ?? '')
       const size = dimensionsFromPath(src)
+      const srcSet = responsiveSrcSet(src, options.mediaBaseUrl)
       node.properties.src = resolveMediaUrl(src, options.mediaBaseUrl)
+      if (srcSet) {
+        node.properties.srcSet = srcSet
+        node.properties.sizes = CONTENT_IMAGE_SIZES
+      }
       node.properties.loading = 'lazy'
       node.properties.decoding = 'async'
       if (size) {
