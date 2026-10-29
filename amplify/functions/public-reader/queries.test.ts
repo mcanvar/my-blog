@@ -6,6 +6,7 @@ import {
   isLive,
   listApprovedComments,
   listPublishedPosts,
+  routePublicQuery,
   type QueryFn,
 } from './queries'
 
@@ -60,5 +61,25 @@ describe('public reader', () => {
   it('round-trips pagination tokens and ignores garbage', () => {
     expect(decodeToken(encodeToken({ a: 1 }))).toEqual({ a: 1 })
     expect(decodeToken('not-base64-json')).toBeUndefined()
+  })
+
+  it('routes the Amplify Gen 2 event shape (fieldName at the top level)', async () => {
+    const query = vi.fn<QueryFn>().mockResolvedValue({ Items: [] })
+    const tables = { post: 'Post', comment: 'Comment' }
+    await routePublicQuery(
+      { fieldName: 'listPublishedPosts', arguments: { locale: 'en' } },
+      query,
+      tables
+    )
+    expect(query.mock.calls[0]![0]).toMatchObject({ TableName: 'Post', IndexName: 'byLocale' })
+    await routePublicQuery(
+      { fieldName: 'listApprovedComments', arguments: { postId: 'p' } },
+      query,
+      tables
+    )
+    expect(query.mock.calls[1]![0]).toMatchObject({ TableName: 'Comment', IndexName: 'byPost' })
+    await expect(routePublicQuery({ arguments: {} }, query, tables)).rejects.toThrow(
+      'Unknown field'
+    )
   })
 })
