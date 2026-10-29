@@ -1,23 +1,26 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { resolveMediaUrl } from '@/lib/content/media'
-import { uploadImage } from '@/lib/media/upload'
+import { isVariantPath, resolveMediaUrl } from '@/lib/content/media'
+import { removeImage, uploadImage } from '@/lib/media/upload'
 import type { MediaItem } from '@/lib/types'
 import { EmptyState } from './ui'
 
 async function fetchMedia(mediaBaseUrl?: string): Promise<MediaItem[]> {
   const { list } = await import('aws-amplify/storage')
   const result = await list({ path: 'media/', options: { listAll: true } })
-  return result.items
-    .filter((item) => !item.path.endsWith('/'))
-    .map((item) => ({
-      path: `/${item.path}`,
-      url: resolveMediaUrl(`/${item.path}`, mediaBaseUrl),
-      size: item.size ?? null,
-      lastModified: item.lastModified ? item.lastModified.toISOString() : null,
-    }))
-    .sort((a, b) => (b.lastModified ?? '').localeCompare(a.lastModified ?? ''))
+  return (
+    result.items
+      // Responsive copies (….w640.webp) belong to their original and are not listed separately.
+      .filter((item) => !item.path.endsWith('/') && !isVariantPath(item.path))
+      .map((item) => ({
+        path: `/${item.path}`,
+        url: resolveMediaUrl(`/${item.path}`, mediaBaseUrl),
+        size: item.size ?? null,
+        lastModified: item.lastModified ? item.lastModified.toISOString() : null,
+      }))
+      .sort((a, b) => (b.lastModified ?? '').localeCompare(a.lastModified ?? ''))
+  )
 }
 
 export function MediaLibrary({
@@ -74,8 +77,7 @@ export function MediaLibrary({
 
   async function remove(item: MediaItem) {
     if (!window.confirm(`Delete ${item.path}? Posts that use it will show a broken image.`)) return
-    const { remove: removeObject } = await import('aws-amplify/storage')
-    await removeObject({ path: item.path.slice(1) })
+    await removeImage(item.path)
     await load()
   }
 
@@ -90,7 +92,9 @@ export function MediaLibrary({
         <span className="font-semibold text-ink">
           {busy ? 'Uploading…' : 'Drop or choose images'}
         </span>
-        <span>Resized to 2000px, converted to WebP, cached for a year on the CDN.</span>
+        <span>
+          Resized to 2000px with 640/1200px copies, converted to WebP, cached for a year on the CDN.
+        </span>
         <input
           type="file"
           multiple

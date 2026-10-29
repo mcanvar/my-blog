@@ -32,6 +32,16 @@ describe('renderMarkdown', () => {
     expect(html).toContain('loading="lazy"')
   })
 
+  it('adds srcset and sizes for responsive uploads', async () => {
+    const { html } = await renderMarkdown('![Patika](/media/2026/trail-ab12cd-rs-2000x1125.webp)', {
+      mediaBaseUrl: 'https://cdn.mcanvar.dev',
+    })
+    expect(html).toContain(
+      'srcset="https://cdn.mcanvar.dev/media/2026/trail-ab12cd-rs-2000x1125.w640.webp 640w, https://cdn.mcanvar.dev/media/2026/trail-ab12cd-rs-2000x1125.w1200.webp 1200w, https://cdn.mcanvar.dev/media/2026/trail-ab12cd-rs-2000x1125.webp 2000w"'
+    )
+    expect(html).toContain('sizes="(min-width: 64rem) 46rem, 100vw"')
+  })
+
   it('marks external links noopener but leaves own links alone', async () => {
     const { html } = await renderMarkdown('[a](https://example.com) [b](https://mcanvar.dev/x)', {
       siteHost: 'mcanvar.dev',
