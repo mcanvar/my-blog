@@ -23,6 +23,9 @@ jobs:
   check:
     name: Lint, types, tests, build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
     env:
       # No AWS access in CI: the site builds against in-memory fixtures.
       BLOG_DATA_SOURCE: fixtures
@@ -33,6 +36,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: website/package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
@@ -43,6 +47,9 @@ jobs:
     name: End-to-end (fixtures)
     runs-on: ubuntu-latest
     needs: check
+    defaults:
+      run:
+        working-directory: website
     env:
       BLOG_DATA_SOURCE: fixtures
       NEXT_TELEMETRY_DISABLED: 1
@@ -52,6 +59,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: website/package-lock.json
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
@@ -59,7 +67,7 @@ jobs:
         if: failure()
         with:
           name: playwright-report
-          path: playwright-report
+          path: website/playwright-report
           retention-days: 7
 
   # Amplify auto-build is off for `main`: it only builds after every check above passed,

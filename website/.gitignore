@@ -1,0 +1,48 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+.idea
+.vscode/*
+!.vscode/extensions.json
+
+# debug
+npm-debug.log*
+
+# env files — never commit values. `.env.example` lists names only.
+.env*
+!.env.example
+
+# typescript
+*.tsbuildinfo
+
+# amplify gen 2 (generated per environment, never committed)
+.amplify
+amplify_outputs*
+amplifyconfiguration*
+
+# migration reports may contain content dumps
+/scripts/reports
+/scripts/translations.json
+
+# OpenChamber local artifacts (screenshots)
+/.openchamber
