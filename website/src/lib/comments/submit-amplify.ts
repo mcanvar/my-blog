@@ -23,7 +23,8 @@ export async function submitCommentViaAmplify(
     import('aws-amplify/data'),
     import('@/amplify_outputs.json'),
   ])
-  Amplify.configure(outputs.default, { ssr: true })
+  // Guest credentials only; nothing here touches the admin's HttpOnly session cookies.
+  Amplify.configure(outputs.default)
   const client = generateClient<Schema>({ authMode: 'identityPool' })
   const { data, errors } = await client.mutations.submitComment(input)
   if (errors?.length || !data) return 'ERROR'

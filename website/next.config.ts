@@ -5,29 +5,46 @@ import createNextIntlPlugin from 'next-intl/plugin'
 
 const isDev = process.env.NODE_ENV === 'development'
 
-function mediaHostname(): string {
+interface Outputs {
+  auth?: { aws_region?: string }
+  data?: { url?: string }
+  custom?: { mediaBaseUrl?: string }
+}
+
+function readOutputs(): Outputs {
   const file = join(process.cwd(), 'amplify_outputs.json')
-  if (!existsSync(file)) return '*.cloudfront.net'
+  if (!existsSync(file)) return {}
   try {
-    const outputs = JSON.parse(readFileSync(file, 'utf8')) as { custom?: { mediaBaseUrl?: string } }
-    return outputs.custom?.mediaBaseUrl
-      ? new URL(outputs.custom.mediaBaseUrl).hostname
-      : '*.cloudfront.net'
+    return JSON.parse(readFileSync(file, 'utf8')) as Outputs
   } catch {
-    return '*.cloudfront.net'
+    return {}
   }
 }
+
+const outputs = readOutputs()
+// Without a backend (fixtures builds) nothing remote is allowed for media.
+const mediaHostname = outputs.custom?.mediaBaseUrl
+  ? new URL(outputs.custom.mediaBaseUrl).hostname
+  : 'media.invalid'
+
+// The comment form talks to the Cognito identity pool (guest credentials), AppSync and reCAPTCHA.
+const commentOrigins = [
+  outputs.auth?.aws_region
+    ? `https://cognito-identity.${outputs.auth.aws_region}.amazonaws.com`
+    : '',
+  outputs.data?.url ? new URL(outputs.data.url).origin : '',
+].filter(Boolean)
 
 // Public pages are statically generated, so they can't use nonces.
 // /admin gets a strict nonce-based policy from src/proxy.ts instead.
 const publicCsp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://www.google.com https://www.gstatic.com https://www.recaptcha.net`,
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.amazonaws.com https://*.amazoncognito.com https://www.google.com https://www.recaptcha.net",
-  'frame-src https://www.google.com https://recaptcha.google.com https://www.recaptcha.net',
+  ["connect-src 'self'", ...commentOrigins, 'https://www.google.com/recaptcha/'].join(' '),
+  'frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/',
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -56,8 +73,8 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      { protocol: 'https', hostname: mediaHostname() },
-      { protocol: 'https', hostname: 'secure.gravatar.com' },
+      { protocol: 'https', hostname: mediaHostname, pathname: '/media/**' },
+      { protocol: 'https', hostname: 'secure.gravatar.com', pathname: '/avatar/**' },
     ],
   },
   async headers() {

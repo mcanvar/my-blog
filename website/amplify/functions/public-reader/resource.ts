@@ -12,4 +12,5 @@ export const publicReader = defineFunction({
   timeoutSeconds: 10,
   memoryMB: 512,
   resourceGroupName: 'data',
+  logging: { retention: '1 month' },
 })

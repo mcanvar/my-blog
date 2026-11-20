@@ -1,5 +1,4 @@
 import 'server-only'
-import { createServerRunner } from '@aws-amplify/adapter-nextjs'
 import {
   generateServerClientUsingCookies,
   generateServerClientUsingReqRes,
@@ -8,7 +7,7 @@ import { cookies } from 'next/headers'
 import type { Schema } from '@/amplify/data/resource'
 import { amplifyOutputs } from './outputs'
 
-export const { runWithAmplifyServerContext } = createServerRunner({ config: amplifyOutputs })
+export { runWithAmplifyServerContext } from './runner'
 
 /**
  * Guest client for public pages. Used with `nextServerContext: null`, so it never

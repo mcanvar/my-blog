@@ -64,6 +64,14 @@ export function validateSlug(slug: string): string | null {
   return null
 }
 
+/**
+ * Route parameters arrive decoded. Post and tag slugs only ever contain [a-z0-9-], so anything
+ * else cannot match and is answered with 404 before any data access (or a decoding error).
+ */
+export function isSlugParam(value: string, maxLength = 80): boolean {
+  return value.length <= maxLength && SLUG_PATTERN.test(value)
+}
+
 /** Tags are stored as display text; URLs use their slug. */
 export function tagSlug(tag: string): string {
   return slugify(tag, 40)

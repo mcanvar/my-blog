@@ -2,17 +2,29 @@ import { DynamoDBClient, UpdateItemCommand } from '@aws-sdk/client-dynamodb'
 
 const dynamo = new DynamoDBClient({})
 
-export const RATE_WINDOWS = [
+export interface RateWindow {
+  name: string
+  seconds: number
+  max: number
+}
+
+/** Per visitor, keyed by the hashed IP. */
+export const IP_WINDOWS: RateWindow[] = [
   { name: '10m', seconds: 600, max: 3 },
   { name: '1d', seconds: 86_400, max: 10 },
-] as const
+]
 
-/** Fixed-window counters keyed by the hashed IP; rows expire through DynamoDB TTL. */
-export async function consumeRateLimit(key: string, now = Date.now()): Promise<boolean> {
-  const table = process.env.RATE_LIMIT_TABLE
-  if (!table) return true
+/** Site-wide ceiling: bounds cost and notification volume when many IPs are used at once. */
+export const GLOBAL_WINDOWS: RateWindow[] = [{ name: '1h', seconds: 3_600, max: 60 }]
 
-  for (const window of RATE_WINDOWS) {
+/** Fixed-window counters; rows expire through DynamoDB TTL. */
+export async function consumeRateLimit(
+  table: string,
+  key: string,
+  windows: RateWindow[],
+  now = Date.now()
+): Promise<boolean> {
+  for (const window of windows) {
     const bucket = Math.floor(now / 1000 / window.seconds)
     const result = await dynamo.send(
       new UpdateItemCommand({

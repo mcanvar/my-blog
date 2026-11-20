@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "@aws-amplify/adapter-nextjs": "^1.8.1",
-    "@aws-amplify/ui-react": "^6.15.7",
+    "@aws-sdk/client-s3": "^3.1159.0",
+    "@aws-sdk/s3-presigned-post": "^3.1159.0",
     "@tiptap/extension-image": "^3.32.1",
     "@tiptap/extension-table": "^3.32.1",
     "@tiptap/extensions": "^3.32.1",

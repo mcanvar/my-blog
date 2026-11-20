@@ -1,10 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { ChatIcon, DocIcon, ExternalIcon, GearIcon, GridIcon, ImageIcon, LogoMark } from '../icons'
-import { hasAmplifyBackend } from './AmplifyClient'
 
 const nav = [
   { href: '/admin', label: 'Dashboard', icon: GridIcon, exact: true },
@@ -17,23 +16,16 @@ const nav = [
 export function AdminShell({
   email,
   pendingComments,
+  signOutHref,
   children,
 }: {
   email: string
   pendingComments: number
+  /** /api/auth/sign-out ends the Cognito session and clears the HttpOnly cookies. */
+  signOutHref: string
   children: ReactNode
 }) {
   const pathname = usePathname()
-  const router = useRouter()
-
-  async function onSignOut() {
-    if (hasAmplifyBackend) {
-      const { signOut } = await import('aws-amplify/auth')
-      await signOut()
-    }
-    router.replace('/admin/login')
-    router.refresh()
-  }
 
   return (
     <div className="min-h-dvh md:grid md:grid-cols-[13.5rem_1fr]">
@@ -80,13 +72,9 @@ export function AdminShell({
             {email}
           </span>
           <span>ADMINS · MFA</span>
-          <button
-            type="button"
-            onClick={onSignOut}
-            className="self-start underline hover:text-white"
-          >
+          <a href={signOutHref} className="self-start underline hover:text-white">
             Sign out
-          </button>
+          </a>
         </div>
       </aside>
       <div className="min-w-0">{children}</div>

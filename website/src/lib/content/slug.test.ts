@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { slugify, tagSlug, validateSlug } from './slug'
+import { isSlugParam, slugify, tagSlug, validateSlug } from './slug'
 
 describe('slugify', () => {
   it('transliterates Turkish letters', () => {
@@ -39,5 +39,16 @@ describe('validateSlug', () => {
 describe('tagSlug', () => {
   it('slugifies tags', () => {
     expect(tagSlug('Erişilebilirlik')).toBe('erisilebilirlik')
+  })
+})
+
+describe('isSlugParam', () => {
+  it('accepts slugs and nothing that needs decoding', () => {
+    expect(isSlugParam('paristen-virginiaya-dynamodb-tasima-gunlugu')).toBe(true)
+    expect(isSlugParam('%E0%A4%A')).toBe(false)
+    expect(isSlugParam('../admin')).toBe(false)
+    expect(isSlugParam('Büyük')).toBe(false)
+    expect(isSlugParam('a'.repeat(81))).toBe(false)
+    expect(isSlugParam('a'.repeat(41), 40)).toBe(false)
   })
 })

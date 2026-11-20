@@ -22,12 +22,13 @@ applications:
           commands:
             # Server-side env vars must be in .env.production to reach the SSR runtime.
             # Only non-public names are listed here; NEXT_PUBLIC_* are inlined at build time anyway.
-            - env | grep -E '^INDEXNOW_KEY=' >> .env.production || true
+            # AMPLIFY_APP_ORIGIN (the branch's site origin) turns on HttpOnly admin sessions.
+            - env | grep -E '^(INDEXNOW_KEY|AMPLIFY_APP_ORIGIN)=' >> .env.production || true
             - npm run build
       artifacts:
         baseDirectory: .next
         files:
-          - '**/*'
+          - "**/*"
       cache:
         paths:
           - .next/cache/**/*

@@ -1,45 +1,22 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { isVariantPath, resolveMediaUrl } from '@/lib/content/media'
-import { removeImage, uploadImage } from '@/lib/media/upload'
+import { deleteMediaAction, listMediaAction } from '@/app/admin/actions/media'
+import { uploadImage } from '@/lib/media/upload'
 import type { MediaItem } from '@/lib/types'
 import { EmptyState } from './ui'
 
-async function fetchMedia(mediaBaseUrl?: string): Promise<MediaItem[]> {
-  const { list } = await import('aws-amplify/storage')
-  const result = await list({ path: 'media/', options: { listAll: true } })
-  return (
-    result.items
-      // Responsive copies (….w640.webp) belong to their original and are not listed separately.
-      .filter((item) => !item.path.endsWith('/') && !isVariantPath(item.path))
-      .map((item) => ({
-        path: `/${item.path}`,
-        url: resolveMediaUrl(`/${item.path}`, mediaBaseUrl),
-        size: item.size ?? null,
-        lastModified: item.lastModified ? item.lastModified.toISOString() : null,
-      }))
-      .sort((a, b) => (b.lastModified ?? '').localeCompare(a.lastModified ?? ''))
-  )
-}
-
-export function MediaLibrary({
-  enabled,
-  mediaBaseUrl,
-}: {
-  enabled: boolean
-  mediaBaseUrl?: string
-}) {
+export function MediaLibrary({ enabled }: { enabled: boolean }) {
   const [items, setItems] = useState<MediaItem[] | null>(null)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
 
-  const load = useCallback(async () => setItems(await fetchMedia(mediaBaseUrl)), [mediaBaseUrl])
+  const load = useCallback(async () => setItems(await listMediaAction()), [])
 
   useEffect(() => {
     if (!enabled) return
     let cancelled = false
-    fetchMedia(mediaBaseUrl)
+    listMediaAction()
       .then((result) => {
         if (!cancelled) setItems(result)
       })
@@ -49,7 +26,7 @@ export function MediaLibrary({
     return () => {
       cancelled = true
     }
-  }, [enabled, mediaBaseUrl])
+  }, [enabled])
 
   if (!enabled) {
     return (
@@ -77,7 +54,8 @@ export function MediaLibrary({
 
   async function remove(item: MediaItem) {
     if (!window.confirm(`Delete ${item.path}? Posts that use it will show a broken image.`)) return
-    await removeImage(item.path)
+    const result = await deleteMediaAction(item.path)
+    if (!result.ok) setMessage(result.error ?? 'Delete failed')
     await load()
   }
 

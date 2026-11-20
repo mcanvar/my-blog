@@ -1,5 +1,6 @@
 import { mediaBaseUrl } from '@/lib/amplify/outputs'
 import { resolveMediaUrl } from '@/lib/content/media'
+import { isSlugParam } from '@/lib/content/slug'
 import { getPost } from '@/lib/data/public'
 import { renderOgCard } from '@/lib/og'
 import { PRODUCTION_HOST } from '@/lib/site'
@@ -8,9 +9,11 @@ import { LOCALES, type Locale } from '@/lib/types'
 /** Per-post social card: title, reading time, first tag and the cover when there is one. */
 export async function GET(_request: Request, { params }: RouteContext<'/api/og/[locale]/[slug]'>) {
   const { locale: rawLocale, slug } = await params
-  if (!LOCALES.includes(rawLocale as Locale)) return new Response('Not found', { status: 404 })
+  if (!LOCALES.includes(rawLocale as Locale) || !isSlugParam(slug)) {
+    return new Response('Not found', { status: 404 })
+  }
   const locale = rawLocale as Locale
-  const post = await getPost(locale, decodeURIComponent(slug))
+  const post = await getPost(locale, slug)
   if (!post) return new Response('Not found', { status: 404 })
 
   const minutes =

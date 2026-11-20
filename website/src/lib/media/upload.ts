@@ -1,10 +1,5 @@
-import {
-  MEDIA_CACHE_CONTROL,
-  RESPONSIVE_MARKER,
-  variantPath,
-  variantWidths,
-} from '../content/media'
-import { slugify } from '../content/slug'
+import { createUploadAction, type PresignedUpload } from '@/app/admin/actions/media'
+import { MAX_IMAGE_WIDTH, MAX_UPLOAD_BYTES } from './paths'
 
 export const ACCEPTED_IMAGE_TYPES = [
   'image/jpeg',
@@ -13,7 +8,6 @@ export const ACCEPTED_IMAGE_TYPES = [
   'image/avif',
   'image/gif',
 ]
-const MAX_WIDTH = 2000
 const QUALITY = 0.82
 
 export interface UploadedImage {
@@ -23,10 +17,7 @@ export interface UploadedImage {
   height: number
 }
 
-async function encodeWebp(
-  bitmap: ImageBitmap,
-  width: number
-): Promise<{ blob: Blob; height: number }> {
+async function encodeWebp(bitmap: ImageBitmap, width: number): Promise<Blob> {
   const height = Math.round((bitmap.height * width) / bitmap.width)
   const canvas = document.createElement('canvas')
   canvas.width = width
@@ -39,53 +30,43 @@ async function encodeWebp(
     canvas.toBlob(resolve, 'image/webp', QUALITY)
   )
   if (!blob) throw new Error('Could not encode the image')
-  return { blob, height }
+  return blob
+}
+
+async function postToS3(upload: PresignedUpload, blob: Blob): Promise<void> {
+  const form = new FormData()
+  for (const [name, value] of Object.entries(upload.fields)) form.append(name, value)
+  form.append('file', blob)
+  const response = await fetch(upload.url, { method: 'POST', body: form })
+  if (!response.ok) throw new Error(`Upload failed (${response.status})`)
 }
 
 /**
  * Resizes in the browser (max 2000px), converts to WebP, and uploads the full image plus smaller
- * copies (640/1200px) for `srcset`, all with a one-year immutable cache header. ADMINS only.
+ * copies (640/1200px) for `srcset`. The server names the files and presigns each upload; the
+ * browser never holds AWS credentials. ADMINS only.
  */
 export async function uploadImage(file: File, baseName?: string): Promise<UploadedImage> {
   if (!ACCEPTED_IMAGE_TYPES.includes(file.type))
     throw new Error('Use a JPEG, PNG, WebP, AVIF or GIF image.')
   const bitmap = await createImageBitmap(file)
   try {
-    const width = Math.min(MAX_WIDTH, bitmap.width)
-    const full = await encodeWebp(bitmap, width)
-    const stem = slugify(baseName || file.name.replace(/\.[^.]+$/, ''), 40) || 'image'
-    const id = crypto.randomUUID().slice(0, 6)
-    const path = `/media/${new Date().getFullYear()}/${stem}-${id}${RESPONSIVE_MARKER}${width}x${full.height}.webp`
+    const width = Math.min(MAX_IMAGE_WIDTH, bitmap.width)
+    const height = Math.round((bitmap.height * width) / bitmap.width)
+    const plan = await createUploadAction({
+      name: baseName || file.name.replace(/\.[^.]+$/, ''),
+      width,
+      height,
+    })
+    if (!plan.ok) throw new Error(plan.error)
 
-    const files = [{ path, blob: full.blob }]
-    for (const w of variantWidths(width)) {
-      files.push({ path: variantPath(path, w), blob: (await encodeWebp(bitmap, w)).blob })
+    for (const upload of plan.uploads) {
+      const blob = await encodeWebp(bitmap, upload.width)
+      if (blob.size > MAX_UPLOAD_BYTES) throw new Error('The image is larger than 10 MB as WebP.')
+      await postToS3(upload, blob)
     }
-
-    const { uploadData } = await import('aws-amplify/storage')
-    await Promise.all(
-      files.map(
-        (f) =>
-          uploadData({
-            path: f.path.slice(1),
-            data: f.blob,
-            options: { contentType: 'image/webp', cacheControl: MEDIA_CACHE_CONTROL },
-          }).result
-      )
-    )
-    return { path, width, height: full.height }
+    return { path: plan.path, width, height }
   } finally {
     bitmap.close()
   }
-}
-
-/** Removes an uploaded image and its responsive copies. */
-export async function removeImage(path: string): Promise<void> {
-  const { remove } = await import('aws-amplify/storage')
-  const size = /-(\d{2,5})x\d{2,5}\.webp$/i.exec(path)
-  const paths = [path]
-  if (path.includes(RESPONSIVE_MARKER) && size) {
-    for (const w of variantWidths(Number(size[1]))) paths.push(variantPath(path, w))
-  }
-  await Promise.all(paths.map((p) => remove({ path: p.slice(1) })))
 }
