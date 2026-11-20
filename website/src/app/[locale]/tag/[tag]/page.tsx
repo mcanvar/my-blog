@@ -5,6 +5,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { RegisterAlternates } from '@/components/site/alternates'
 import { TrailTrack } from '@/components/trail/TrailTrack'
 import { mediaBaseUrl } from '@/lib/amplify/outputs'
+import { isSlugParam } from '@/lib/content/slug'
 import { getPostsByTag, getTags } from '@/lib/data/public'
 import { breadcrumbNode, collectionPageNode, graph } from '@/lib/seo/jsonld'
 import { buildMetadata } from '@/lib/seo/metadata'
@@ -25,7 +26,8 @@ export async function generateMetadata({
 }: PageProps<'/[locale]/tag/[tag]'>): Promise<Metadata> {
   const { locale: rawLocale, tag: slug } = await params
   const locale = rawLocale as Locale
-  const { tag, posts } = await getPostsByTag(locale, decodeURIComponent(slug))
+  if (!isSlugParam(slug, 40)) return {}
+  const { tag, posts } = await getPostsByTag(locale, slug)
   if (!posts.length) return {}
   const t = await getTranslations({ locale, namespace: 'Meta' })
   return buildMetadata({
@@ -40,7 +42,8 @@ export default async function TagPage({ params }: PageProps<'/[locale]/tag/[tag]
   const { locale: rawLocale, tag: slug } = await params
   const locale = rawLocale as Locale
   setRequestLocale(locale)
-  const { tag, posts } = await getPostsByTag(locale, decodeURIComponent(slug))
+  if (!isSlugParam(slug, 40)) notFound()
+  const { tag, posts } = await getPostsByTag(locale, slug)
   if (!posts.length) notFound()
   const [t, tMeta] = await Promise.all([getTranslations('Tags'), getTranslations('Meta')])
   const path = tagPath(locale, tag)

@@ -8,15 +8,16 @@ on:
 permissions:
   contents: read
 
+# Actions are pinned to commit SHAs (tags can be moved); Dependabot keeps them current.
 jobs:
   secrets:
     name: Secret scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -31,13 +32,15 @@ jobs:
       BLOG_DATA_SOURCE: fixtures
       NEXT_TELEMETRY_DISABLED: 1
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: website/package-lock.json
       - run: npm ci
+      # Known vulnerabilities in what ships (build tooling is reviewed through Dependabot).
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
@@ -54,8 +57,8 @@ jobs:
       BLOG_DATA_SOURCE: fixtures
       NEXT_TELEMETRY_DISABLED: 1
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -63,12 +66,22 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: failure()
         with:
           name: playwright-report
           path: website/playwright-report
           retention-days: 7
+
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec # v5.0.1
+        with:
+          fail-on-severity: high
 
   # Amplify auto-build is off for `main`: it only builds after every check above passed,
   # so broken commits never reach a (paid) Amplify build.

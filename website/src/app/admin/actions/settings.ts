@@ -2,6 +2,7 @@
 
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { z } from 'zod'
+import { mediaBaseUrl } from '@/lib/amplify/outputs'
 import { requireAdmin } from '@/lib/auth/admin'
 import { adminRepository } from '@/lib/data/admin'
 import { CACHE_TAGS } from '@/lib/data/public'
@@ -13,12 +14,26 @@ const httpsUrl = z
   .url()
   .refine((v) => v.startsWith('https://'), 'Use an https URL')
 
+/** The avatar renders through next/image on every page, which only loads these two sources. */
+function isAllowedAvatarUrl(value: string): boolean {
+  const url = new URL(value)
+  if (url.hostname === 'secure.gravatar.com') return url.pathname.startsWith('/avatar/')
+  return (
+    !!mediaBaseUrl &&
+    url.hostname === new URL(mediaBaseUrl).hostname &&
+    url.pathname.startsWith('/media/')
+  )
+}
+
 const settingsSchema = z.object({
   authorName: z.string().trim().min(2).max(80),
   authorJobTitle: z.string().trim().max(120),
   bioTr: z.string().trim().max(600),
   bioEn: z.string().trim().max(600),
-  avatarUrl: httpsUrl,
+  avatarUrl: httpsUrl.refine(
+    isAllowedAvatarUrl,
+    'Use a secure.gravatar.com avatar or an image from the media library (full CDN URL)'
+  ),
   sameAs: z.array(httpsUrl).max(12),
   knowsAbout: z.array(z.string().trim().min(1).max(60)).max(20),
   commentsEnabled: z.boolean(),
