@@ -1,11 +1,11 @@
-import { createServerRunner } from '@aws-amplify/adapter-nextjs'
 import { fetchAuthSession } from 'aws-amplify/auth/server'
 import createIntlMiddleware from 'next-intl/middleware'
 import { NextResponse, type NextRequest } from 'next/server'
 import { routing } from './i18n/routing'
 import { amplifyOutputs } from './lib/amplify/outputs'
+import { runWithAmplifyServerContext } from './lib/amplify/runner'
 import { getDataSource, isFixtureAdminAllowed } from './lib/data/source'
-import { PRODUCTION_HOST } from './lib/site'
+import { isIndexable, PRODUCTION_HOST, siteUrl } from './lib/site'
 
 const handleI18n = createIntlMiddleware(routing)
 
@@ -21,6 +21,18 @@ const ROOT_FILES = new Set([
 
 const MARKDOWN_PATH = /^(?:\/(en))?\/([^/]+)\.md$/
 
+/** Amplify's default domain for the production branch; the production build redirects it. */
+const PRODUCTION_DEFAULT_DOMAIN = /^main\.[a-z0-9]+\.amplifyapp\.com$/
+
+// The admin talks to its own server only, plus S3 for presigned media uploads.
+const mediaUploadOrigins = (() => {
+  const bucket = amplifyOutputs.storage?.bucket_name
+  const region = amplifyOutputs.storage?.aws_region
+  return bucket && region
+    ? [`https://${bucket}.s3.${region}.amazonaws.com`, `https://${bucket}.s3.amazonaws.com`]
+    : []
+})()
+
 function adminCsp(nonce: string): string {
   const isDev = process.env.NODE_ENV === 'development'
   return [
@@ -29,7 +41,7 @@ function adminCsp(nonce: string): string {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
-    "connect-src 'self' https://*.amazonaws.com https://*.amazoncognito.com",
+    ["connect-src 'self'", ...mediaUploadOrigins].join(' '),
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -37,10 +49,23 @@ function adminCsp(nonce: string): string {
   ].join('; ')
 }
 
+/**
+ * next-intl decodes the path once more when it rewrites to /<locale>/…, so `/%25E0…` turns into an
+ * invalid escape that the router cannot decode (a 500). No page URL here needs that.
+ */
+function survivesLocaleRewrite(pathname: string): boolean {
+  try {
+    decodeURIComponent(decodeURIComponent(pathname))
+    return true
+  } catch {
+    return false
+  }
+}
+
 async function isAdmin(request: NextRequest, response: NextResponse): Promise<boolean> {
   if (isFixtureAdminAllowed()) return true
   if (getDataSource() !== 'amplify') return false
-  const { runWithAmplifyServerContext } = createServerRunner({ config: amplifyOutputs })
+  // Reads the HttpOnly session cookies; refreshed tokens are written back on `response`.
   return runWithAmplifyServerContext({
     nextServerContext: { request, response },
     operation: async (contextSpec) => {
@@ -69,9 +94,7 @@ async function handleAdmin(request: NextRequest): Promise<NextResponse> {
 
   const isLogin = request.nextUrl.pathname === '/admin/login'
   if (!isLogin && !(await isAdmin(request, response))) {
-    const login = new URL('/admin/login', request.url)
-    login.searchParams.set('next', request.nextUrl.pathname)
-    return NextResponse.redirect(login)
+    return NextResponse.redirect(new URL('/admin/login', request.url))
   }
   return response
 }
@@ -79,12 +102,22 @@ async function handleAdmin(request: NextRequest): Promise<NextResponse> {
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  const host = request.headers.get('host')?.split(':')[0] ?? ''
+  if (isIndexable && PRODUCTION_DEFAULT_DOMAIN.test(host)) {
+    return NextResponse.redirect(new URL(`${pathname}${request.nextUrl.search}`, siteUrl), 308)
+  }
+
   if (pathname === '/admin' || pathname.startsWith('/admin/')) return handleAdmin(request)
   if (ROOT_FILES.has(pathname)) return NextResponse.next()
 
   const indexNowKey = process.env.INDEXNOW_KEY
   if (indexNowKey && pathname === `/${indexNowKey}.txt`) {
-    return NextResponse.rewrite(new URL('/api/indexnow-key', request.url))
+    return new NextResponse(indexNowKey, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+      },
+    })
   }
 
   const markdown = MARKDOWN_PATH.exec(pathname)
@@ -93,8 +126,14 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.rewrite(new URL(`/api/md/${locale}/${markdown[2]}`, request.url))
   }
 
+  if (!survivesLocaleRewrite(pathname)) {
+    return new NextResponse('Not found', {
+      status: 404,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    })
+  }
+
   const response = handleI18n(request)
-  const host = request.headers.get('host')?.split(':')[0]
   if (host !== PRODUCTION_HOST) response.headers.set('X-Robots-Tag', 'noindex')
   return response
 }
@@ -102,7 +141,9 @@ export default async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     // Everything except Next internals, API routes and static assets. .xml/.txt/.md/.json pass through
-    // so /feed.xml, /feed.json and /<slug>.md get their locale.
-    '/((?!api|_next|_vercel|.*\\.(?:png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|css|js|map)$).*)',
+    // so /feed.xml, /feed.json and /<slug>.md get their locale. Post slugs may start with "api".
+    '/((?!api(?:/|$)|_next|_vercel|.*\\.(?:png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|css|js|map)$).*)',
+    // Admin paths always go through the guard, whatever they end with.
+    '/admin/:path*',
   ],
 }

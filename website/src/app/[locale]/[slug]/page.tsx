@@ -12,6 +12,7 @@ import { RegisterAlternates } from '@/components/site/alternates'
 import { mediaBaseUrl } from '@/lib/amplify/outputs'
 import { renderMarkdown } from '@/lib/content/markdown'
 import { resolveMediaUrl } from '@/lib/content/media'
+import { isSlugParam } from '@/lib/content/slug'
 import { loadPost } from '@/lib/data/post-loader'
 import {
   getAdjacentPosts,
@@ -48,7 +49,8 @@ export async function generateMetadata({
 }: PageProps<'/[locale]/[slug]'>): Promise<Metadata> {
   const { locale: rawLocale, slug } = await params
   const locale = rawLocale as Locale
-  const loaded = await loadPost(locale, decodeURIComponent(slug))
+  if (!isSlugParam(slug)) return {}
+  const loaded = await loadPost(locale, slug)
   if (!loaded) return {}
   const { post } = loaded
   const translations = await getPostTranslations(post)
@@ -88,11 +90,12 @@ function commentsMode(): CommentsMode {
 }
 
 export default async function PostPage({ params }: PageProps<'/[locale]/[slug]'>) {
-  const { locale: rawLocale, slug: rawSlug } = await params
+  const { locale: rawLocale, slug } = await params
   const locale = rawLocale as Locale
   setRequestLocale(locale)
 
-  const loaded = await loadPost(locale, decodeURIComponent(rawSlug))
+  if (!isSlugParam(slug)) notFound()
+  const loaded = await loadPost(locale, slug)
   if (!loaded) notFound()
   const { post, preview } = loaded
 

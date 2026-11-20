@@ -11,6 +11,19 @@ import { getDataSource } from './source'
 
 export const CACHE_TAGS = { posts: 'posts', comments: 'comments', settings: 'settings' } as const
 const SETTINGS_ID = 'site'
+// Guests may read these; recaptchaThreshold is admin-only and would fail the whole request.
+const PUBLIC_SETTINGS_FIELDS = [
+  'authorName',
+  'authorJobTitle',
+  'bioTr',
+  'bioEn',
+  'avatarUrl',
+  'sameAs',
+  'knowsAbout',
+  'commentsEnabled',
+  'commentsAutoCloseDays',
+  'blockedCrawlers',
+] as const
 
 function errorMessage(errors: { message: string }[] | undefined): string {
   return errors?.map((e) => e.message).join('; ') ?? 'unknown error'
@@ -88,7 +101,11 @@ const amplifySettings = unstable_cache(
   async (): Promise<SiteSettings> => {
     const { publicClient, guestContext, withThrottleRetry } = await amplifyPublic()
     const response = await withThrottleRetry(() =>
-      publicClient.models.SiteSettings.get(guestContext(), { id: SETTINGS_ID })
+      publicClient.models.SiteSettings.get(
+        guestContext(),
+        { id: SETTINGS_ID },
+        { selectionSet: PUBLIC_SETTINGS_FIELDS }
+      )
     )
     if (response.errors?.length) return defaultSettings
     return toSettings(response.data as Record<string, unknown> | null)

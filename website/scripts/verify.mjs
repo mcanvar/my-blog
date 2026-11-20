@@ -4,18 +4,24 @@
  *
  *   npm run verify          lock file (npm 10, like Amplify), lint, types, unit tests,
  *                           backend synth (CDK, offline), production build with fixtures
- *   npm run verify:cloud    the above, plus a production build against the deployed `main`
- *                           backend (needs AWS credentials) — catches IAM, Lambda and runtime issues
+ *   npm run verify:cloud    the above, plus a guest-access check and a production build against the
+ *                           deployed `main` backend (needs AWS credentials and AMPLIFY_APP_ID)
+ *                           — catches IAM, authorization, Lambda and runtime issues
  */
 import { execSync } from 'node:child_process'
 import { copyFileSync, existsSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-const APP_ID = '<amplify-app-id>'
 const BRANCH = 'main'
 const AMPLIFY_NPM = '10.9.9' // npm bundled with the Node 22 used by amplify.yml
 const cloud = process.argv.includes('--cloud')
+// Amplify console → App settings → General (kept out of the public repo).
+const APP_ID = process.env.AMPLIFY_APP_ID?.trim()
+if (cloud && !APP_ID) {
+  console.error('verify:cloud needs AMPLIFY_APP_ID (Amplify console → App settings → General).')
+  process.exit(1)
+}
 
 const steps = []
 function step(name, command, env = {}) {
@@ -67,6 +73,11 @@ function cloudBuild() {
       name: `fetch outputs of the deployed ${BRANCH} backend`,
       command: `npx ampx generate outputs --app-id ${APP_ID} --branch ${BRANCH} --out-dir .`,
       env: { AWS_REGION: 'us-east-1' },
+    })
+    run({
+      name: 'guest access limited to the public API',
+      command: 'node scripts/check-guest-access.mjs amplify_outputs.json',
+      env: {},
     })
     rmSync('.next', { recursive: true, force: true })
     run({
