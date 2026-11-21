@@ -207,8 +207,11 @@ a `Disallow: /` robots.txt (when `NEXT_PUBLIC_SITE_URL` points at the preview) a
 
 Every comment request logs one JSON line with an `outcome` (`stored`, `verify_rejected`,
 `rate_limited`, `trap_stored`, …) and no visitor text. Lambda and AppSync logs are kept for a month.
-Production also caps concurrency (comment-guard 5, public-reader 25), so a flood costs little and
-shows up as throttle alarms.
+Comment volume is bounded by the per-IP and site-wide rate limits. The functions have no reserved
+concurrency: the account's Lambda quota is 50, and Lambda keeps all of it unreserved at that size.
+A flood therefore shows up as throttle alarms once the account limit is reached. To cap individual
+functions, raise the quota (Service Quotas → AWS Lambda → Concurrent executions) and set
+`reservedConcurrentExecutions` in `amplify/backend.ts`.
 
 ## Migrating the old data (Paris → Virginia)
 

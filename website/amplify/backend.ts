@@ -259,12 +259,10 @@ if (mediaZone && mediaDomain) {
   })
 }
 
-// ---- Production only: concurrency caps and alarms. Reserved concurrency comes out of the
-// account's 50; preview branches skip it so their deploys never compete with main for it.
+// ---- Production only: alarms. No reserved concurrency: this account's Lambda quota is 50 and
+// Lambda keeps all 50 unreserved at that size. After a quota increase (Service Quotas → Lambda →
+// Concurrent executions), caps can be set with cfnFunction.reservedConcurrentExecutions.
 if (isProductionBranch) {
-  backend.commentGuard.resources.cfnResources.cfnFunction.reservedConcurrentExecutions = 5
-  backend.publicReader.resources.cfnResources.cfnFunction.reservedConcurrentExecutions = 25
-
   const opsTopic = new sns.Topic(guardStack, 'OpsAlarms', { displayName: 'Blog alarms' })
   if (notifyEmail) opsTopic.addSubscription(new subscriptions.EmailSubscription(notifyEmail))
   const alarmAction = new cloudwatchActions.SnsAction(opsTopic)
@@ -303,7 +301,7 @@ if (isProductionBranch) {
     'CommentGuardThrottles',
     commentLambda.metricThrottles({ period }),
     1,
-    'comment-guard hit its concurrency cap (possible comment flood).'
+    'comment-guard is being throttled (account concurrency limit reached; possible flood).'
   )
   alarm(
     'PublicReaderErrors',
@@ -315,7 +313,7 @@ if (isProductionBranch) {
     'PublicReaderThrottles',
     readerLambda.metricThrottles({ period }),
     5,
-    'public-reader hit its concurrency cap (possible read flood).'
+    'public-reader is being throttled (account concurrency limit reached; possible read flood).'
   )
   alarm(
     'AppSyncServerErrors',
