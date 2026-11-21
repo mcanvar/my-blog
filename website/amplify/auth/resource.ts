@@ -18,7 +18,8 @@ export const auth = defineAuth({
     externalProviders: {
       callbackUrls: [`${origin}/api/auth/sign-in-callback`],
       logoutUrls: [`${origin}/api/auth/sign-out-callback`],
-      scopes: ['OPENID', 'EMAIL'],
+      // COGNITO_ADMIN keeps access tokens usable for user-pool APIs, as with the previous sign-in.
+      scopes: ['OPENID', 'EMAIL', 'COGNITO_ADMIN'],
     },
   },
   multifactor: {
