@@ -286,7 +286,7 @@ Deployment settings never default to this site: the backend takes its address fr
 redirect only runs when `NEXT_PUBLIC_SITE_URL` is set, and every key, email address and AWS
 identifier comes from your own Amplify secrets and environment variables.
 
-## Credits
+## Credits & license
 
-Icons drawn for this site. Fonts under the SIL Open Font License; the licence texts are in
-`src/assets/fonts/`.
+Code under the [MIT License](../LICENSE). Icons drawn for this site. Fonts under the SIL Open
+Font License; the licence texts are in `src/assets/fonts/`.
