@@ -610,7 +610,7 @@ export function PostEditor({
                 <>
                   <div className="rounded-lg border border-[#e4e3dd] p-3">
                     <p className="truncate text-[0.7rem] text-fern">
-                      mcanvar.dev{sitePath.replace(/\//g, ' › ').replace(/^ › /, ' › ')}
+                      mcanvar.dev{sitePath.replace(/\//g, ' › ')}
                     </p>
                     <p className="mt-0.5 line-clamp-2 text-[0.95rem] leading-snug font-medium text-[#1a4f8b]">
                       {seoTitle || 'Title'}

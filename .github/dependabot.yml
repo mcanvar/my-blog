@@ -1,16 +1,23 @@
 version: 2
 updates:
+  # Every merge to main deploys, so updates arrive as few, grouped PRs: one for all minor and
+  # patch npm updates, separate ones for major npm updates, one for GitHub Actions.
   - package-ecosystem: npm
     directory: /website
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
     groups:
-      aws-sdk:
-        patterns: ["@aws-sdk/*"]
-      amplify:
-        patterns: ["@aws-amplify/*", "aws-amplify", "aws-cdk-lib"]
+      # Tiptap packages require exactly matching versions of each other.
+      tiptap:
+        patterns: ["@tiptap/*"]
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
