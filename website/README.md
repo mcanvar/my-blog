@@ -207,10 +207,9 @@ a `Disallow: /` robots.txt (when `NEXT_PUBLIC_SITE_URL` points at the preview) a
 
 Every comment request logs one JSON line with an `outcome` (`stored`, `verify_rejected`,
 `rate_limited`, `trap_stored`, …) and no visitor text. Lambda and AppSync logs are kept for a month.
-Comment volume is bounded by the per-IP and site-wide rate limits. The functions have no reserved
-concurrency: the account's Lambda quota is 50, and Lambda keeps all of it unreserved at that size.
-A flood therefore shows up as throttle alarms once the account limit is reached. To cap individual
-functions, raise the quota (Service Quotas → AWS Lambda → Concurrent executions) and set
+Comment volume is bounded by the per-IP and site-wide rate limits. The functions set no reserved
+concurrency, because AWS accounts at a low Lambda concurrency quota can't reserve any. To cap
+individual functions, raise the quota (Service Quotas → AWS Lambda → Concurrent executions) and set
 `reservedConcurrentExecutions` in `amplify/backend.ts`.
 
 ## Migrating the old data (Paris → Virginia)
@@ -271,6 +270,23 @@ backup/export), the `amplify-myblog-dev-*` deployment bucket, IAM roles and stac
 - Self-hosted fonts (Bricolage Grotesque, Literata, JetBrains Mono — Turkish glyphs included),
   AVIF/WebP images, Server Components by default
 
+## Forking
+
+The code works for any site, but a few things are this blog's own. Change them before deploying:
+
+- `src/lib/site.ts`: `PRODUCTION_HOST` (only this host is indexed by search engines), site name,
+  tagline and default author settings (including the avatar URL)
+- `messages/*.json`, `src/app/manifest.ts`, `src/app/[locale]/layout.tsx` and the social card
+  (`src/app/api/og/`): names and titles
+- `next.config.ts`: the `www.` → apex redirect for this domain
+- Fixture posts (`src/lib/data/fixtures/`) and the e2e tests that check them
+
+Deployment settings never default to this site: the backend takes its address from
+`AMPLIFY_APP_ORIGIN` (otherwise the branch's own amplifyapp.com address), the default-domain
+redirect only runs when `NEXT_PUBLIC_SITE_URL` is set, and every key, email address and AWS
+identifier comes from your own Amplify secrets and environment variables.
+
 ## Credits
 
-Icons drawn for this site. Fonts under the SIL Open Font License.
+Icons drawn for this site. Fonts under the SIL Open Font License; the licence texts are in
+`src/assets/fonts/`.
