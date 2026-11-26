@@ -15,6 +15,8 @@ import { join } from 'node:path'
 
 const BRANCH = 'main'
 const AMPLIFY_NPM = '10.9.9' // npm bundled with the Node 22 used by amplify.yml
+// Exact versions for tools fetched with npx, so a new release never runs unreviewed.
+const CDK_CLI = '2.1149.0'
 const cloud = process.argv.includes('--cloud')
 // Amplify console → App settings → General (kept out of the public repo).
 const APP_ID = process.env.AMPLIFY_APP_ID?.trim()
@@ -47,7 +49,7 @@ step(
   [
     'npx',
     '--yes',
-    'aws-cdk@2',
+    `aws-cdk@${CDK_CLI}`,
     'synth',
     '--quiet',
     '--app',

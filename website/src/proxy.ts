@@ -21,8 +21,13 @@ const ROOT_FILES = new Set([
 
 const MARKDOWN_PATH = /^(?:\/(en))?\/([^/]+)\.md$/
 
-/** Amplify's default domain for the production branch; the production build redirects it. */
+/**
+ * Amplify's default domain for the production branch. It redirects to the custom domain, but only
+ * when NEXT_PUBLIC_SITE_URL is set explicitly: an unconfigured fork never sends its visitors to the
+ * default site URL.
+ */
 const PRODUCTION_DEFAULT_DOMAIN = /^main\.[a-z0-9]+\.amplifyapp\.com$/
+const redirectDefaultDomain = isIndexable && Boolean(process.env.NEXT_PUBLIC_SITE_URL)
 
 // The admin talks to its own server only, plus S3 for presigned media uploads.
 const mediaUploadOrigins = (() => {
@@ -103,7 +108,7 @@ export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   const host = request.headers.get('host')?.split(':')[0] ?? ''
-  if (isIndexable && PRODUCTION_DEFAULT_DOMAIN.test(host)) {
+  if (redirectDefaultDomain && PRODUCTION_DEFAULT_DOMAIN.test(host)) {
     return NextResponse.redirect(new URL(`${pathname}${request.nextUrl.search}`, siteUrl), 308)
   }
 

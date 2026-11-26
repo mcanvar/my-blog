@@ -259,9 +259,9 @@ if (mediaZone && mediaDomain) {
   })
 }
 
-// ---- Production only: alarms. No reserved concurrency: this account's Lambda quota is 50 and
-// Lambda keeps all 50 unreserved at that size. After a quota increase (Service Quotas → Lambda →
-// Concurrent executions), caps can be set with cfnFunction.reservedConcurrentExecutions.
+// ---- Production only: alarms. No reserved concurrency: accounts at a low Lambda concurrency quota
+// can't reserve any. After a quota increase (Service Quotas → Lambda → Concurrent executions), caps
+// can be set with cfnFunction.reservedConcurrentExecutions.
 if (isProductionBranch) {
   const opsTopic = new sns.Topic(guardStack, 'OpsAlarms', { displayName: 'Blog alarms' })
   if (notifyEmail) opsTopic.addSubscription(new subscriptions.EmailSubscription(notifyEmail))
